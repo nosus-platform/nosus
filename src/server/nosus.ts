@@ -43,6 +43,10 @@ export const createNosusApp = () => {
         }),
     );
 
+    nosus.use('/health', (_, res) => {
+        res.status(200).end('OK');
+    });
+
     if (process.env.NODE_ENV === 'production') {
         nosus.use(
             express.static(path.resolve(process.cwd(), 'dist/client'), {
