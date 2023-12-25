@@ -23,7 +23,11 @@ if (process.env.NODE_ENV === 'development') {
                 try {
                     const htmlString = await vite.transformIndexHtml(
                         req.url,
-                        html({ themePlaceholder: 'dark', path: './index.html' }),
+                        html({
+                            themePlaceholder: 'dark',
+                            localePlaceholder: req.locale.language,
+                            path: './index.html',
+                        }),
                     );
 
                     res.status(200)

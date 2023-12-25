@@ -59,8 +59,10 @@ export const createNosusApp = () => {
                     .set({ 'Content-Type': 'text/html' })
                     .end(
                         html({
-                            // @ts-ignore
+                            // @ts-ignore express user do not understand resolved user with prisma
                             themePlaceholder: req.user?.settings?.theme || 'dark',
+                            // @ts-ignore Locale is not satisfied to express-locale
+                            localePlaceholder: req.locale.language,
                             path: './dist/client/index.html',
                         }),
                     );
