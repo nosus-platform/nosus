@@ -11,7 +11,18 @@ export const useAuth = () => {
         updateCookie: updateToken,
         deleteCookie: deleteToken,
     } = useCookie('_authToken', 1000);
-    const { value: refreshTokenCookie, deleteCookie: deleteRefreshToken } = useCookie('_refreshToken');
+    const {
+        value: refreshTokenCookie,
+        updateCookie: updateRefreshToken,
+        deleteCookie: deleteRefreshToken,
+    } = useCookie('_refreshToken');
+    const updateTokens = useCallback((token: string, refreshToken: string) => {
+        updateToken(token);
+        updateRefreshToken(refreshToken);
+    }, [
+        updateToken,
+        updateRefreshToken,
+    ]);
     const userId = useMemo(() => {
         if (authTokenCookie) {
             const base64Url = authTokenCookie.split('.')[1];
@@ -43,7 +54,7 @@ export const useAuth = () => {
         refreshToken: refreshTokenCookie,
         authorized: Boolean(authTokenCookie),
         id: userId,
-        updateToken,
+        updateTokens,
         signout,
     };
 };

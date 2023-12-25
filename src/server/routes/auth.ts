@@ -126,7 +126,7 @@ export const authRouter = router({
                     refreshTokenExpDays,
                 });
 
-                return { token };
+                return { token, refreshToken };
             }
 
             return;

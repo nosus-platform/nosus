@@ -18,7 +18,7 @@ export const pageContext = createContext<PageContextProps>({});
 
 export const PageContext: React.FC<React.PropsWithChildren> = ({ children }) => {
     const navigate = useNavigate();
-    const { authorized, token, refreshToken, updateToken } = useAuth();
+    const { authorized, token, refreshToken, updateTokens } = useAuth();
     const authRefreshMutation = trpc.auth.refresh.useMutation();
     const [global, remote] = useOfflineDetector({
         pollingDelay: 1000,
@@ -47,7 +47,7 @@ export const PageContext: React.FC<React.PropsWithChildren> = ({ children }) => 
             (async () => {
                 const data = await authRefreshMutation.mutateAsync(undefined);
 
-                data ? updateToken(data.token) : navigate(paths.authSignin());
+                data ? updateTokens(data.token, data.refreshToken) : navigate(paths.authSignin());
             })();
         }
     }, [networkStatus, authRefreshMutation, token]);
