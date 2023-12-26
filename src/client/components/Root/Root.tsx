@@ -5,7 +5,9 @@ import { useTrpc } from '../../hooks/useTrpc';
 import { trpc } from '../../utils/trpc';
 import { PageContext } from '../../context/page';
 import { Main } from '../Main/Main';
-import { Theme } from '../Theme';
+import { Theme } from '../Theme/Theme';
+
+import './Root.module.css';
 
 export const Root = () => {
     const { queryClient, trpcClient } = useTrpc();

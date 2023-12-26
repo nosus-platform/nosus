@@ -1,7 +1,9 @@
 import { ThemeProvider, useTheme } from 'next-themes';
 import React, { useContext, useEffect } from 'react';
 
-import { pageContext } from '../context/page';
+import { pageContext } from '../../context/page';
+
+import './Theme.module.css';
 
 const ThemeSync: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { user } = useContext(pageContext);
@@ -16,6 +18,16 @@ const ThemeSync: React.FC<React.PropsWithChildren> = ({ children }) => {
     }
 
     useEffect(() => {
+        // save css variables pass
+        const currentHref = document?.getElementById?.('themeVariables')?.getAttribute('href')?.split('/');
+        currentHref?.pop?.();
+        currentHref?.push(`${syncTheme}.css`);
+        const newHref = currentHref?.join('/');
+
+        if (newHref) {
+            document?.getElementById?.('themeVariables')?.setAttribute?.('href', newHref);
+        }
+
         setTheme(syncTheme);
     }, [syncTheme]);
 
