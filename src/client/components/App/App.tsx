@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { nullable } from '../../utils/nullable';
 import { pageContext } from '../../context/page';
 import { usePageLoading } from '../../hooks/usePageLoading';
+import { useHotkeys } from '../../hooks/useHotkeys';
 import { LoadingProgress } from '../LoadingProgress/LoadingProgress';
 import { NetworkStatusBar } from '../NetworkStatusBar/NetworkStatusBar';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
@@ -11,6 +12,8 @@ import { AppMenuBar } from '../AppMenuBar/AppMenuBar';
 import s from './App.module.css';
 
 export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
+    useHotkeys();
+
     const { globalNetworkStatus, remoteNetworkStatus } = useContext(pageContext);
     const pageLoadingRef = usePageLoading();
 
