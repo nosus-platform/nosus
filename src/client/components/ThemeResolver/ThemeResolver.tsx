@@ -1,11 +1,11 @@
-import { ThemeProvider, useTheme } from 'next-themes';
 import React, { useContext, useEffect } from 'react';
+import { ThemeProvider, useTheme } from 'next-themes';
 
 import { pageContext } from '../../context/page';
 
-import './Theme.module.css';
+import './ThemeResolver.module.css';
 
-const ThemeSync: React.FC<React.PropsWithChildren> = ({ children }) => {
+const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
     const { user } = useContext(pageContext);
     const { resolvedTheme, systemTheme, setTheme } = useTheme();
     const syncTheme = user?.theme || resolvedTheme || 'dark';
@@ -34,8 +34,8 @@ const ThemeSync: React.FC<React.PropsWithChildren> = ({ children }) => {
     return children;
 };
 
-export const Theme: React.FC<React.PropsWithChildren> = ({ children }) => (
+export const ThemeResolver: React.FC<React.PropsWithChildren> = ({ children }) => (
     <ThemeProvider defaultTheme="dark">
-        <ThemeSync>{children}</ThemeSync>
+        <Theme>{children}</Theme>
     </ThemeProvider>
 );

@@ -10,16 +10,16 @@ import React, {
 } from 'react';
 import cn from 'classnames';
 
-import s from './PageLoadingProgress.module.css';
+import s from './LoadingProgress.module.css';
 
-interface PageLoadingProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+interface LoadingProgressProps extends React.HTMLAttributes<HTMLDivElement> {
     color?: string;
     start?: number;
     max?: number;
     height?: number;
 }
 
-export interface PageLoadProgressRef {
+export interface LoadProgressRef {
     start: () => void;
     done: () => void;
 }
@@ -72,7 +72,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
     }
 };
 
-export const PageLoadingProgress = forwardRef<PageLoadProgressRef, PageLoadingProgressProps>(
+export const LoadingProgress = forwardRef<LoadProgressRef, LoadingProgressProps>(
     ({ className, color = 'red', start = 0.05, max = 0.995, height = 2, style, ...attrs }, ref) => {
         const barRef = useRef<HTMLDivElement>(null);
         const [{ state, progress }, dispatch] = useReducer(reducer, {
@@ -83,8 +83,8 @@ export const PageLoadingProgress = forwardRef<PageLoadProgressRef, PageLoadingPr
         const cssVariables = useMemo(
             () =>
                 ({
-                    '--PageLoadingProgress-height': `${height}px`,
-                    '--PageLoadingProgress-color': color,
+                    '--LoadingProgress-height': `${height}px`,
+                    '--LoadingProgress-color': color,
                 }) as CSSProperties,
             [height],
         );
@@ -130,9 +130,9 @@ export const PageLoadingProgress = forwardRef<PageLoadProgressRef, PageLoadingPr
         }, [state]);
 
         return (
-            <div className={cn([s.PageLoadingProgress, className])} style={{ ...cssVariables, ...style }} {...attrs}>
-                <div className={s.PageLoadingProgress__Bar} ref={barRef} onTransitionEnd={transitionEndHandle}>
-                    <div className={s.PageLoadingProgress__Inner} />
+            <div className={cn([s.LoadingProgress, className])} style={{ ...cssVariables, ...style }} {...attrs}>
+                <div className={s.LoadingProgress__Bar} ref={barRef} onTransitionEnd={transitionEndHandle}>
+                    <div className={s.LoadingProgress__Inner} />
                 </div>
             </div>
         );

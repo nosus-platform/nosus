@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import type { PageLoadProgressRef } from '../components/PageLoadingProgress/PageLoadingProgress';
+import type { PageLoadProgressRef } from '../components/LoadingProgress/LoadingProgress';
 
 export const usePageLoading = () => {
     const pageLoadingRef = useRef<PageLoadProgressRef>(null);

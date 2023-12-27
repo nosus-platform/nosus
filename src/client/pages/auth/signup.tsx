@@ -1,16 +1,15 @@
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from 'next-themes';
 
 import { trpc } from '../../utils/trpc';
 import type { SignupSchema } from '../../../server/contract/schema/auth';
 import { useForm } from '../../hooks/useForm';
-import { paths } from '../../components/Router';
 import { humanError } from '../../utils/humanError';
 import { nullable } from '../../utils/nullable';
+import { useRouter } from '../../hooks/useRouter';
 
 export default () => {
-    const navigate = useNavigate();
+    const router = useRouter();
     const { resolvedTheme } = useTheme();
     const { register, handleSubmit } = useForm<SignupSchema>({
         email: '',
@@ -23,13 +22,13 @@ export default () => {
     const onSubmit = useCallback(
         async (data: SignupSchema) => {
             await signupMutation.mutateAsync(data);
-            navigate(paths.index());
+            router.index();
         },
-        [signupMutation],
+        [signupMutation, router],
     );
 
     return (
-        <div>
+        <>
             <h3>Signup</h3>
             {nullable(signupMutation.error, () => (
                 <div>{JSON.stringify(humanError(signupMutation.error), null, 2)}</div>
@@ -40,6 +39,6 @@ export default () => {
 
                 <button type="submit">Submit</button>
             </form>
-        </div>
+        </>
     );
 };

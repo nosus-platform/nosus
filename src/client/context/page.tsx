@@ -1,15 +1,13 @@
 import { createContext, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { onlineManager } from '@tanstack/react-query';
 
-import { useAuth } from '../hooks/useAuth';
-import { trpc } from '../utils/trpc';
 import type { UserSession } from '../../server/contract/inferedTypes/user';
 import { useOfflineDetector } from '../hooks/useOfflineDetector';
-import { paths } from '../components/Router';
 
-interface PageContextProps {
+export interface PageContextProps {
     authorized?: boolean;
     user?: UserSession;
+    networkStatus?: boolean;
     globalNetworkStatus?: boolean;
     remoteNetworkStatus?: boolean;
 }
@@ -17,40 +15,26 @@ interface PageContextProps {
 export const pageContext = createContext<PageContextProps>({});
 
 export const PageContext: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const navigate = useNavigate();
-    const { authorized, token, refreshToken, updateTokens } = useAuth();
-    const authRefreshMutation = trpc.auth.refresh.useMutation();
-    const [global, remote] = useOfflineDetector({
+    const [globalNetworkStatus, remoteNetworkStatus] = useOfflineDetector({
         pollingDelay: 1000,
         remoteServerUrl: '/nosus/health',
     });
-    const networkStatus = process.env.NODE_ENV === 'development' ? remote : global && remote;
-    const { data: user } = trpc.user.session.useQuery(undefined, {
-        enabled: authorized && networkStatus,
-        staleTime: 0,
-        cacheTime: 0,
-        refetchOnReconnect: networkStatus,
-        refetchOnWindowFocus: networkStatus,
-    });
+
+    const networkStatus =
+        process.env.NODE_ENV === 'development' ? remoteNetworkStatus : globalNetworkStatus && remoteNetworkStatus;
+
     const context = useMemo<PageContextProps>(
         () => ({
-            authorized: authRefreshMutation.isLoading ? true : authorized,
-            user,
-            globalNetworkStatus: global,
-            remoteNetworkStatus: remote,
+            networkStatus,
+            globalNetworkStatus,
+            remoteNetworkStatus,
         }),
-        [user, global, remote, authRefreshMutation.isLoading, authorized],
+        [globalNetworkStatus, remoteNetworkStatus],
     );
 
     useEffect(() => {
-        if (networkStatus && refreshToken && !token && !authRefreshMutation.isLoading) {
-            (async () => {
-                const data = await authRefreshMutation.mutateAsync(undefined);
-
-                data ? updateTokens(data.token, data.refreshToken) : navigate(paths.authSignin());
-            })();
-        }
-    }, [networkStatus, authRefreshMutation, token]);
+        onlineManager.setOnline(networkStatus);
+    }, [globalNetworkStatus, remoteNetworkStatus]);
 
     return <pageContext.Provider value={context}>{children}</pageContext.Provider>;
 };

@@ -1,11 +1,10 @@
 import { QueryClient } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
-import { useNavigate } from 'react-router-dom';
 
 import { trpc } from '../utils/trpc';
 import { useState } from 'react';
-import { paths } from '../components/Router';
 import { useAuth } from './useAuth';
+import { useRouter, routes } from './useRouter';
 
 const authHeader = (token?: string) =>
     !token
@@ -14,15 +13,15 @@ const authHeader = (token?: string) =>
               Authorization: `Bearer ${token}`,
           };
 
-export const useTrpc = () => {
-    const navigate = useNavigate();
+export const usePrivateTrpc = () => {
+    const router = useRouter();
     const { token, refreshToken } = useAuth();
     const [queryClient] = useState(() => new QueryClient());
     const [trpcClient] = useState(() =>
         trpc.createClient({
             links: [
                 httpBatchLink({
-                    url: paths.api(),
+                    url: routes.api(),
                     headers: () => authHeader(token),
                     fetch: async (input, init?) => {
                         return fetch(input, {
@@ -30,14 +29,14 @@ export const useTrpc = () => {
                             credentials: 'include',
                         }).then(async (res) => {
                             if (res.status === 401 && refreshToken) {
-                                const refreshTokenRes = await fetch(paths.apiAuthRefresh(), {
+                                const refreshTokenRes = await fetch(routes.apiAuthRefresh(), {
                                     method: 'POST',
                                     // allow server cookies
                                     credentials: 'same-origin',
                                 });
 
                                 if (refreshTokenRes.status === 401 || refreshTokenRes.status === 500) {
-                                    navigate(paths.authSignin());
+                                    router.authSignin();
 
                                     return {
                                         json() {
@@ -59,6 +58,21 @@ export const useTrpc = () => {
                             return res;
                         });
                     },
+                }),
+            ],
+        }),
+    );
+
+    return { queryClient, trpcClient };
+};
+
+export const usePublicTrpc = () => {
+    const [queryClient] = useState(() => new QueryClient());
+    const [trpcClient] = useState(() =>
+        trpc.createClient({
+            links: [
+                httpBatchLink({
+                    url: routes.api(),
                 }),
             ],
         }),

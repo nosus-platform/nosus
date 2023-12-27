@@ -1,11 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { useCookie } from './useCookie';
-import { paths } from '../components/Router';
 
 export const useAuth = () => {
-    const navigate = useNavigate();
     const {
         value: authTokenCookie,
         updateCookie: updateToken,
@@ -46,7 +43,6 @@ export const useAuth = () => {
     const signout = useCallback(() => {
         deleteToken();
         deleteRefreshToken();
-        navigate(paths.authSignin());
     }, [deleteToken, deleteRefreshToken]);
 
     return {

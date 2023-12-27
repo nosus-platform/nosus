@@ -1,21 +1,34 @@
-import { PageLoadingProgress } from '../PageLoadingProgress/PageLoadingProgress';
-import { SideBar } from '../SideBar/SideBar';
+import { useContext } from 'react';
+
+import { nullable } from '../../utils/nullable';
+import { pageContext } from '../../context/page';
+import { usePageLoading } from '../../hooks/usePageLoading';
+import { LoadingProgress } from '../LoadingProgress/LoadingProgress';
+import { NetworkStatusBar } from '../NetworkStatusBar/NetworkStatusBar';
+import { AppSideBar } from '../AppSideBar/AppSideBar';
+import { AppMenuBar } from '../AppMenuBar/AppMenuBar';
 
 import s from './App.module.css';
-import { usePageLoading } from '../../hooks/usePageLoading';
 
 export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
+    const { globalNetworkStatus, remoteNetworkStatus } = useContext(pageContext);
     const pageLoadingRef = usePageLoading();
 
     return (
         <>
-            <PageLoadingProgress ref={pageLoadingRef} />
+            <LoadingProgress ref={pageLoadingRef} />
 
-            <div className={s.App}>
-                <SideBar />
+            {nullable(!globalNetworkStatus || !remoteNetworkStatus, () => (
+                <NetworkStatusBar global={!globalNetworkStatus} remote={!remoteNetworkStatus} />
+            ))}
+
+            <AppMenuBar />
+
+            <main className={s.App}>
+                <AppSideBar />
 
                 <div className={s.Outlet}>{children}</div>
-            </div>
+            </main>
         </>
     );
 };

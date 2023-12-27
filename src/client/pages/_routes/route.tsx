@@ -1,0 +1,73 @@
+import React, { Suspense, useContext, useEffect, useMemo } from 'react';
+
+import { trpc } from '../../utils/trpc';
+import { App } from '../../components/App/App';
+import { useAuth } from '../../hooks/useAuth';
+import { nullable } from '../../utils/nullable';
+import type { PageContextProps } from '../../context/page';
+import { pageContext } from '../../context/page';
+import { PrivateTrpc, PublicTrpc } from '../../components/Trpc/Trpc';
+import { useRouter } from '../../hooks/useRouter';
+
+const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => {
+    const router = useRouter();
+    const currentPageContext = useContext(pageContext);
+    const { authorized, token, refreshToken, updateTokens } = useAuth();
+    const authRefreshMutation = trpc.auth.refresh.useMutation();
+    const { data: user } = trpc.user.session.useQuery(undefined, {
+        enabled: authorized,
+        staleTime: 0,
+        cacheTime: 0,
+        refetchOnReconnect: true,
+        refetchOnWindowFocus: true,
+    });
+    const context = useMemo<PageContextProps>(
+        () => ({
+            ...currentPageContext,
+            authorized: authRefreshMutation.isLoading ? true : authorized,
+            user,
+        }),
+        [user, currentPageContext, authRefreshMutation.isLoading, authorized],
+    );
+
+    useEffect(() => {
+        if (!authorized && !refreshToken) {
+            router.authSignin();
+        }
+    }, [authorized]);
+
+    useEffect(() => {
+        if (refreshToken && !token && !authRefreshMutation.isLoading) {
+            (async () => {
+                const data = await authRefreshMutation.mutateAsync(undefined);
+
+                data ? updateTokens(data.token, data.refreshToken) : router.authSignin();
+            })();
+        }
+    }, [authRefreshMutation, token]);
+
+    return nullable(authorized, () => (
+        <pageContext.Provider value={context}>
+            <App>{children}</App>
+        </pageContext.Provider>
+    ));
+};
+
+export const Protected: React.FC<React.PropsWithChildren> = ({ children }) => (
+    <PrivateTrpc>
+        <ProtectedOverrides>{children}</ProtectedOverrides>
+    </PrivateTrpc>
+);
+
+export const PublicRoute: React.FC<React.PropsWithChildren> = ({ children }) => {
+    return <PublicTrpc>{children}</PublicTrpc>;
+};
+
+const createElementWrapper = (Wrapper: React.FC<React.PropsWithChildren>) => (children: React.ReactNode) => (
+    <Wrapper>
+        <Suspense fallback="Loading...">{children}</Suspense>
+    </Wrapper>
+);
+
+export const publicElement = createElementWrapper(PublicRoute);
+export const protectedElement = createElementWrapper(Protected);

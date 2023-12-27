@@ -1,13 +1,13 @@
-.PageLoadingProgress {
+.LoadingProgress {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 
-    height: var(--PageLoadingProgress-height);
+    height: var(--LoadingProgress-height);
 }
 
-.PageLoadingProgress__Bar {
+.LoadingProgress__Bar {
     height: 100%;
     width: 0;
     transition: width 0.6s linear;
@@ -15,8 +15,8 @@
     display: flex;
 }
 
-.PageLoadingProgress__Inner {
-    background-color: var(--PageLoadingProgress-color);
+.LoadingProgress__Inner {
+    background-color: var(--LoadingProgress-color);
     position: absolute;
     top: 0;
     left: 0;

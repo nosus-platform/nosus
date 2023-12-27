@@ -1,4 +1,4 @@
-.MenuBar {
+.AppMenuBar {
     display: flex;
     justify-content: space-between;
 }
