@@ -4,6 +4,7 @@ import { nullable } from '../../utils/nullable';
 import { pageContext } from '../../context/page';
 import { usePageLoading } from '../../hooks/usePageLoading';
 import { useHotkeys } from '../../hooks/useHotkeys';
+import { NotificationsStack } from '../../hooks/useNotifications';
 import { LoadingProgress } from '../LoadingProgress/LoadingProgress';
 import { NetworkStatusBar } from '../NetworkStatusBar/NetworkStatusBar';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
@@ -24,6 +25,8 @@ export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
             {nullable(!globalNetworkStatus || !remoteNetworkStatus, () => (
                 <NetworkStatusBar global={!globalNetworkStatus} remote={!remoteNetworkStatus} />
             ))}
+
+            <NotificationsStack />
 
             <AppMenuBar />
 

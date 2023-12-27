@@ -7,6 +7,7 @@ import { useOfflineDetector } from '../hooks/useOfflineDetector';
 export interface PageContextProps {
     authorized?: boolean;
     user?: UserSession;
+    theme?: 'light' | 'dark';
     networkStatus?: boolean;
     globalNetworkStatus?: boolean;
     remoteNetworkStatus?: boolean;

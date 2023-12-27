@@ -1,19 +1,26 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { ThemeProvider, useTheme } from 'next-themes';
 
-import { pageContext } from '../../context/page';
+import { PageContextProps, pageContext } from '../../context/page';
 
 import './ThemeResolver.module.css';
 
 const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
-    const { user } = useContext(pageContext);
+    const currentPageContext = useContext(pageContext);
     const { resolvedTheme, systemTheme, setTheme } = useTheme();
-    const syncTheme = user?.theme || resolvedTheme || 'dark';
+    const syncTheme = (currentPageContext?.user?.theme || resolvedTheme || 'dark') as 'light' | 'dark';
+    const context = useMemo<PageContextProps>(
+        () => ({
+            ...currentPageContext,
+            theme: syncTheme,
+        }),
+        [currentPageContext],
+    );
 
-    if (user?.theme && user?.theme !== systemTheme) {
+    if (currentPageContext?.user?.theme && currentPageContext?.user?.theme !== systemTheme) {
         // TODO: add popup message with action buttons
         console.log(
-            `Your theme(${user?.theme}) and system appereance are different(${systemTheme}). Do you want to Nosus follow it?`,
+            `Your theme(${currentPageContext?.user?.theme}) and system appereance are different(${systemTheme}). Do you want to Nosus follow it?`,
         );
     }
 
@@ -31,7 +38,7 @@ const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
         setTheme(syncTheme);
     }, [syncTheme]);
 
-    return children;
+    return <pageContext.Provider value={context}>{children}</pageContext.Provider>;
 };
 
 export const ThemeResolver: React.FC<React.PropsWithChildren> = ({ children }) => (
