@@ -73,7 +73,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 };
 
 export const LoadingProgress = forwardRef<LoadProgressRef, LoadingProgressProps>(
-    ({ className, color = 'red', start = 0.05, max = 0.995, height = 2, style, ...attrs }, ref) => {
+    ({ className, color = 'var(--blue-500)', start = 0.05, max = 0.995, height = 2, style, ...attrs }, ref) => {
         const barRef = useRef<HTMLDivElement>(null);
         const [{ state, progress }, dispatch] = useReducer(reducer, {
             progress: start,
@@ -88,6 +88,8 @@ export const LoadingProgress = forwardRef<LoadProgressRef, LoadingProgressProps>
                 }) as CSSProperties,
             [height],
         );
+
+        const styles = useMemo(() => ({ ...cssVariables, ...style }), [style]);
 
         useImperativeHandle(
             ref,
@@ -130,7 +132,7 @@ export const LoadingProgress = forwardRef<LoadProgressRef, LoadingProgressProps>
         }, [state]);
 
         return (
-            <div className={cn([s.LoadingProgress, className])} style={{ ...cssVariables, ...style }} {...attrs}>
+            <div className={cn([s.LoadingProgress, className])} style={styles} {...attrs}>
                 <div className={s.LoadingProgress__Bar} ref={barRef} onTransitionEnd={transitionEndHandle}>
                     <div className={s.LoadingProgress__Inner} />
                 </div>
