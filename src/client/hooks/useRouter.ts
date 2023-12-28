@@ -28,6 +28,7 @@ export const routes = {
     authSignin: () => `${base}/auth/signin`,
     authSignup: () => `${base}/auth/signup`,
 
+    tags: () => `${base}/tags`,
     tagsId: (id: number) => `${base}/tags/${id}`,
 
     api: () => `${base}/api`,

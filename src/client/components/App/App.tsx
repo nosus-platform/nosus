@@ -28,12 +28,14 @@ export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
 
             <NotificationsStack />
 
-            <AppMenuBar />
-
             <main className={s.App}>
                 <AppSideBar />
 
-                <div className={s.Outlet}>{children}</div>
+                <div className={s.AppOutlet}>
+                    <AppMenuBar />
+
+                    {children}
+                </div>
             </main>
         </>
     );

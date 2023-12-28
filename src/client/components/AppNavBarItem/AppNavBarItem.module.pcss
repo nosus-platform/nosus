@@ -1,0 +1,32 @@
+.AppNavBarItem {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    padding: var(--gap-xs) var(--gap-l);
+
+    color: var(--gray-400);
+
+    &:hover {
+        background-color: hsl(228, 16%, 24%);
+
+        color: var(--gray-200);
+    }
+}
+
+.AppNavBarItemIcon {
+    box-sizing: border-box;
+
+    --ggs: 0.6;
+
+    margin-right: var(--gap-xs);
+
+    min-width: 20px;
+}
+
+.AppNavBarItemText {
+    font-size: var(--font-size-s);
+}

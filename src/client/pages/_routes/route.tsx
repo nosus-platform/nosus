@@ -49,7 +49,7 @@ const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => 
 
     return nullable(authorized, () => (
         <pageContext.Provider value={context}>
-            <App>{children}</App>
+            {children}
         </pageContext.Provider>
     ));
 };
@@ -57,7 +57,9 @@ const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => 
 export const Protected: React.FC<React.PropsWithChildren> = ({ children }) => (
     <PrivateTrpc>
         <ProtectedOverrides>
-            <ThemeResolver>{children}</ThemeResolver>
+            <ThemeResolver>
+                <App>{children}</App>
+            </ThemeResolver>
         </ProtectedOverrides>
     </PrivateTrpc>
 );
