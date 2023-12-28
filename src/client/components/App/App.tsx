@@ -10,7 +10,7 @@ import { NetworkStatusBar } from '../NetworkStatusBar/NetworkStatusBar';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
 import { AppMenuBar } from '../AppMenuBar/AppMenuBar';
 
-import s from './App.module.css';
+import s from './App.module.pcss';
 
 export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
     useHotkeys();

@@ -1,4 +1,4 @@
-import s from './NetworkStatusBar.module.css';
+import s from './NetworkStatusBar.module.pcss';
 
 interface NetworkStatusBarProps {
     global?: boolean;

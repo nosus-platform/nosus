@@ -2,9 +2,10 @@ import { useCallback } from 'react';
 
 import { useNotifications } from '../../hooks/useNotifications';
 import { useAuth } from '../../hooks/useAuth';
-
-import s from './AppMenuBar.module.css';
 import { useRouter } from '../../hooks/useRouter';
+import { Button } from '../Button/Button';
+
+import s from './AppMenuBar.module.pcss';
 
 export const AppMenuBar = () => {
     const router = useRouter();
@@ -19,8 +20,8 @@ export const AppMenuBar = () => {
     return (
         <div className={s.AppMenuBar}>
             Nosus
-            <button onClick={() => createNotification.success('Hi darling!')}>Toast</button>
-            <button onClick={handleSignout}>Signout</button>
+            <Button onClick={() => createNotification.success('Hi darling!')} text="Toast" />
+            <Button onClick={handleSignout} view="primary" text='Signout'/>
         </div>
     );
 };

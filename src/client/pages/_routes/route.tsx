@@ -8,6 +8,7 @@ import type { PageContextProps } from '../../context/page';
 import { pageContext } from '../../context/page';
 import { PrivateTrpc, PublicTrpc } from '../../components/Trpc/Trpc';
 import { useRouter } from '../../hooks/useRouter';
+import { ThemeResolver } from '../../components/ThemeResolver/ThemeResolver';
 
 const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => {
     const router = useRouter();
@@ -55,13 +56,17 @@ const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => 
 
 export const Protected: React.FC<React.PropsWithChildren> = ({ children }) => (
     <PrivateTrpc>
-        <ProtectedOverrides>{children}</ProtectedOverrides>
+        <ProtectedOverrides>
+            <ThemeResolver>{children}</ThemeResolver>
+        </ProtectedOverrides>
     </PrivateTrpc>
 );
 
-export const PublicRoute: React.FC<React.PropsWithChildren> = ({ children }) => {
-    return <PublicTrpc>{children}</PublicTrpc>;
-};
+export const PublicRoute: React.FC<React.PropsWithChildren> = ({ children }) => (
+    <PublicTrpc>
+        <ThemeResolver>{children}</ThemeResolver>
+    </PublicTrpc>
+);
 
 const createElementWrapper = (Wrapper: React.FC<React.PropsWithChildren>) => (children: React.ReactNode) => (
     <Wrapper>

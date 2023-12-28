@@ -1,10 +1,6 @@
 import { PageContext } from '../../context/page';
-import { ThemeResolver } from '../ThemeResolver/ThemeResolver';
 
-import './Root.module.css';
+import './Root.module.pcss';
+import '../Typo/Typo.module.pcss';
 
-export const Root: React.FC<React.PropsWithChildren> = ({ children }) => (
-    <PageContext>
-        <ThemeResolver>{children}</ThemeResolver>
-    </PageContext>
-);
+export const Root: React.FC<React.PropsWithChildren> = ({ children }) => <PageContext>{children}</PageContext>;
