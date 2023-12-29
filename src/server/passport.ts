@@ -3,8 +3,8 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
 
-import { prisma } from './utils/prisma';
 import { comparePassword } from './utils/password';
+import * as queries from './database/queries';
 
 const LocalStrategy = passportLocal.Strategy;
 const JWTStrategy = passportJWT.Strategy;
@@ -17,8 +17,8 @@ export const configurePassport = (router: Router) => {
     passport.use(
         'signin',
         new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (email, password, done) => {
-            return prisma.user
-                .findUnique({ where: { email } })
+            return queries.user
+                .findForCreds({ email })
                 .then(async (user) => {
                     if (!user)
                         return done(undefined, false, {
@@ -42,18 +42,10 @@ export const configurePassport = (router: Router) => {
                 secretOrKey: process.env.JWT_SECRET,
             },
             (jwtPayload, cb) => {
-                return prisma.user
-                    .findUnique({
-                        where: { id: jwtPayload.id },
-                        include: { settings: true },
-                    })
-                    .then((user) => {
-                        if (!user) throw new Error('User not found');
-                        return cb(null, user);
-                    })
-                    .catch((err) => {
-                        return cb(err);
-                    });
+                return queries.user
+                    .findByOrThrow({ id: jwtPayload.id })
+                    .then((user) => cb(null, user))
+                    .catch((err) => cb(err));
             },
         ),
     );

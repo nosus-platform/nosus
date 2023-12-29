@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { prisma } from '../../utils/prisma';
+import * as queries from '../../database/queries';
 
 const emailField = z.string().min(1, { message: 'Required field' }).email('Invalid email format');
 
@@ -14,11 +14,7 @@ export type SigninSchema = z.infer<typeof signinSchema>;
 export const signupSchema = z.object({
     theme: z.string(),
     email: emailField.refine(async (email) => {
-        const exists = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
+        const exists = await queries.user.findForCreds({ email });
         return !exists;
     }, 'Email already exists'),
     password: z.string().min(6, { message: 'Password must be longer than 6 symbols' }),
