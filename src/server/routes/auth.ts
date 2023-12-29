@@ -2,11 +2,11 @@ import { TRPCError } from '@trpc/server';
 import type { Response } from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import type { User } from '@prisma/client';
 
 import { signinSchema, signupSchema } from '../contract/schema/auth';
-import { encryptPassword } from '../utils/encrypt';
 import { publicProcedure, router } from '../utils/trpc';
+import * as queries from '../database/queries';
+import type { UserSession } from '../database/queries/user';
 
 const daysToMs = (days: number) => days * 24 * 60 * 60 * 100;
 
@@ -40,19 +40,17 @@ const setTokensCookies = (
 export const authRouter = router({
     signup: publicProcedure
         .input(signupSchema)
-        .mutation(async ({ input: { email, password, theme }, ctx: { res, prisma } }) => {
+        .mutation(async ({ input: { email, password, theme }, ctx: { res } }) => {
             try {
-                const user = await prisma.user.create({
-                    data: {
+                const user = await queries.user.create(
+                    {
                         email,
-                        password: await encryptPassword(password),
-                        settings: {
-                            create: {
-                                theme,
-                            },
-                        },
+                        password,
                     },
-                });
+                    {
+                        theme,
+                    },
+                );
 
                 const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 
@@ -78,13 +76,14 @@ export const authRouter = router({
         req.body = { email, password };
 
         try {
-            const user = await new Promise<User>((resolve, reject) => {
+            const user = await new Promise<UserSession>((resolve, reject) => {
                 passport.authenticate(
                     'signin',
                     { session: false },
-                    (err: any, user: User, info?: { message: string }) => {
+                    (err: any, user: UserSession, info?: { message: string }) => {
                         if (err) reject(err);
                         if (info?.message) reject(new Error(info.message));
+
                         resolve(user);
                     },
                 )(req, res);
@@ -108,14 +107,12 @@ export const authRouter = router({
             });
         }
     }),
-    refresh: publicProcedure.mutation(async ({ ctx: { req, res, prisma } }) => {
+    refresh: publicProcedure.mutation(async ({ ctx: { req, res } }) => {
         try {
             const decoded = jwt.verify(req.cookies['_refreshToken'], process.env.JWT_SECRET!);
 
             if (typeof decoded !== 'string' && decoded.id) {
-                const user = await prisma.user.findUniqueOrThrow({
-                    where: { id: decoded.id },
-                });
+                const user = await queries.user.findByOrThrow({ id: decoded.id });
 
                 const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 

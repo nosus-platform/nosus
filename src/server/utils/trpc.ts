@@ -1,14 +1,12 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import passport from 'passport';
-import { User, UserSettings } from '@prisma/client';
 
 import { Context } from './trpcContext';
+import { UserSession } from '../database/queries/user';
 
 export const t = initTRPC.context<Context>().create();
 export const router = t.router;
 export const publicProcedure = t.procedure;
-
-type UserSession = User & { settings?: UserSettings };
 
 /**
  * Why not to use passport middleware before trpc in express app?
@@ -18,7 +16,7 @@ type UserSession = User & { settings?: UserSettings };
  * trade-off for not to support express routes for public API and trpc for private.
  */
 const jwt = t.middleware(async ({ next, ctx: { req, res } }) => {
-    let user: UserSession | undefined;
+    let user: Awaited<UserSession> | undefined;
     try {
         user = await new Promise<UserSession>((resolve, reject) => {
             passport.authenticate(
