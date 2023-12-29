@@ -1,18 +1,19 @@
 import { useCallback, useMemo } from 'react';
 
 import { useCookie } from './useCookie';
+import { cookies } from '../../server/contract/cookies';
 
 export const useAuth = () => {
     const {
         value: authTokenCookie,
         updateCookie: updateToken,
         deleteCookie: deleteToken,
-    } = useCookie('_authToken', 1000);
+    } = useCookie(cookies.authToken, 1000);
     const {
         value: refreshTokenCookie,
         updateCookie: updateRefreshToken,
         deleteCookie: deleteRefreshToken,
-    } = useCookie('_refreshToken');
+    } = useCookie(cookies.refreshToken);
     const updateTokens = useCallback((token: string, refreshToken: string) => {
         updateToken(token);
         updateRefreshToken(refreshToken);

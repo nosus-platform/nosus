@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { cookies } from '../contract/cookies';
 
 export const encryptPassword = (password: string) => bcrypt.hash(password, 10);
 
@@ -24,11 +25,11 @@ export const verifyToken = (token: string) => jwt.verify(token, process.env.JWT_
 
 const daysToMs = (days: number) => days * 24 * 60 * 60 * 100;
 export const setTokensCookies = (res: Response, tokens: ReturnType<typeof signTokens>) => {
-    res.cookie('_authToken', tokens.token, {
+    res.cookie(cookies.authToken, tokens.token, {
         maxAge: daysToMs(tokens.tokenExpDays),
     });
 
-    res.cookie('_refreshToken', tokens.refreshToken, {
+    res.cookie(cookies.refreshToken, tokens.refreshToken, {
         maxAge: daysToMs(tokens.refreshTokenExpDays),
     });
 };

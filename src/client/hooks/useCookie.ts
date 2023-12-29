@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import { cookies } from '../../server/contract/cookies';
 
-export const useCookie = (cookieName: string, interval?: number) => {
+export const useCookie = (cookieName: cookies, interval?: number) => {
     const [value, setValue] = useState<string | undefined>(() => Cookies.get(cookieName));
 
     useEffect(() => {

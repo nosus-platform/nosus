@@ -1,9 +1,10 @@
-import type { Router } from 'express';
+import type { Request, Response, Router } from 'express';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
 
 import * as queries from './database/queries';
+import { UserSession } from './database/queries/user';
 
 const LocalStrategy = passportLocal.Strategy;
 const JWTStrategy = passportJWT.Strategy;
@@ -42,3 +43,18 @@ export const configurePassport = (router: Router) => {
         ),
     );
 };
+
+export const signin = (req: Request, res: Response) =>
+    new Promise<UserSession>((resolve, reject) => {
+        passport.authenticate(
+            'signin',
+            { session: false },
+            (err: any, user: UserSession, info?: { message: string }) => {
+                if (err) reject(err);
+
+                if (info?.message) reject(info.message);
+
+                resolve(user);
+            },
+        )(req, res);
+    });
