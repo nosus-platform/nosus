@@ -3,7 +3,6 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
 
-import { comparePassword } from './utils/password';
 import * as queries from './database/queries';
 
 const LocalStrategy = passportLocal.Strategy;
@@ -16,23 +15,17 @@ export const configurePassport = (router: Router) => {
 
     passport.use(
         'signin',
-        new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (email, password, done) => {
-            return queries.user
-                .findForCreds({ email })
-                .then(async (user) => {
-                    if (!user)
-                        return done(undefined, false, {
-                            message: `Email ${email} not found`,
-                        });
-
-                    const isMatch = await comparePassword(password, user.password);
-                    if (isMatch) return done(undefined, user);
-                    return done(undefined, false, {
+        new LocalStrategy({ usernameField: 'email', passwordField: 'password' }, (email, password, done) =>
+            queries.user
+                .findByCreds({ email, password })
+                .then(async (user) => done(undefined, user))
+                .catch(() =>
+                    // log real error
+                    done(undefined, false, {
                         message: 'Invalid email or password',
-                    });
-                })
-                .catch((err) => done(err));
-        }),
+                    }),
+                ),
+        ),
     );
 
     passport.use(
@@ -41,12 +34,11 @@ export const configurePassport = (router: Router) => {
                 jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
                 secretOrKey: process.env.JWT_SECRET,
             },
-            (jwtPayload, cb) => {
-                return queries.user
-                    .findByOrThrow({ id: jwtPayload.id })
+            (jwtPayload, cb) =>
+                queries.user
+                    .findByIdOrThrow({ id: jwtPayload.id })
                     .then((user) => cb(null, user))
-                    .catch((err) => cb(err));
-            },
+                    .catch((err) => cb(err)),
         ),
     );
 };

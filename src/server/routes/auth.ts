@@ -1,41 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import type { Response } from 'express';
 import passport from 'passport';
-import jwt from 'jsonwebtoken';
 
 import { signinSchema, signupSchema } from '../contract/schema/auth';
 import { publicProcedure, router } from '../utils/trpc';
 import * as queries from '../database/queries';
 import type { UserSession } from '../database/queries/user';
-
-const daysToMs = (days: number) => days * 24 * 60 * 60 * 100;
-
-const signTokens = (id: string) => {
-    const tokenExpDays = Number(process.env.JWT_EXP_DAYS || 1);
-    const token = jwt.sign({ id }, process.env.JWT_SECRET!, {
-        expiresIn: `${tokenExpDays}d`,
-    });
-
-    const refreshTokenExpDays = Number(process.env.JWT_REFRESH_EXP_DAYS || 7);
-    const refreshToken = jwt.sign({ id }, process.env.JWT_SECRET!, {
-        expiresIn: `${refreshTokenExpDays}d`,
-    });
-
-    return { token, tokenExpDays, refreshToken, refreshTokenExpDays };
-};
-
-const setTokensCookies = (
-    res: Response,
-    { token, tokenExpDays, refreshToken, refreshTokenExpDays }: ReturnType<typeof signTokens>,
-) => {
-    res.cookie('_authToken', token, {
-        maxAge: daysToMs(tokenExpDays),
-    });
-
-    res.cookie('_refreshToken', refreshToken, {
-        maxAge: daysToMs(refreshTokenExpDays),
-    });
-};
+import { setTokensCookies, signTokens, verifyToken } from '../utils/encrypt';
 
 export const authRouter = router({
     signup: publicProcedure
@@ -82,6 +52,7 @@ export const authRouter = router({
                     { session: false },
                     (err: any, user: UserSession, info?: { message: string }) => {
                         if (err) reject(err);
+
                         if (info?.message) reject(new Error(info.message));
 
                         resolve(user);
@@ -101,7 +72,7 @@ export const authRouter = router({
             return { days: tokenExpDays, token, refreshToken };
         } catch (error: any) {
             throw new TRPCError({
-                code: 'INTERNAL_SERVER_ERROR',
+                code: 'UNAUTHORIZED',
                 message: error.message,
                 cause: error,
             });
@@ -109,10 +80,10 @@ export const authRouter = router({
     }),
     refresh: publicProcedure.mutation(async ({ ctx: { req, res } }) => {
         try {
-            const decoded = jwt.verify(req.cookies['_refreshToken'], process.env.JWT_SECRET!);
+            const decoded = verifyToken(req.cookies['_refreshToken']);
 
             if (typeof decoded !== 'string' && decoded.id) {
-                const user = await queries.user.findByOrThrow({ id: decoded.id });
+                const user = await queries.user.findByIdOrThrow({ id: decoded.id });
 
                 const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 

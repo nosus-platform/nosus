@@ -14,9 +14,9 @@ export type SigninSchema = z.infer<typeof signinSchema>;
 export const signupSchema = z.object({
     theme: z.string(),
     email: emailField.refine(async (email) => {
-        const exists = await queries.user.findForCreds({ email });
+        const exists = await queries.user.exists({ email });
         return !exists;
-    }, 'Email already exists'),
+    }, 'User already exists'),
     password: z.string().min(6, { message: 'Password must be longer than 6 symbols' }),
 });
 

@@ -2,14 +2,9 @@ import { Insertable } from 'kysely';
 
 import { db } from '..';
 import { User, UserSettings } from '../types';
-import { encryptPassword } from '../../utils/encrypt';
+import { comparePassword, encryptPassword } from '../../utils/encrypt';
 
-interface UserFindOptions {
-    id?: string;
-    email?: string;
-}
-
-export type UserSession = ReturnType<typeof findByOrThrow>;
+export type UserSession = ReturnType<typeof findByIdOrThrow>;
 
 export async function create(u: Insertable<User>, s: Omit<Insertable<UserSettings>, 'userId'>) {
     return db.transaction().execute(async (trx) => {
@@ -22,52 +17,45 @@ export async function create(u: Insertable<User>, s: Omit<Insertable<UserSetting
             .returningAll()
             .executeTakeFirstOrThrow();
 
-        await trx.insertInto('UserSettings').values({
-            ...s,
-            userId: user.id,
-        }).executeTakeFirstOrThrow();
+        await trx
+            .insertInto('UserSettings')
+            .values({
+                ...s,
+                userId: user.id,
+            })
+            .executeTakeFirstOrThrow();
 
         return user;
     });
 }
 
-export async function findByOrThrow({ id, email }: UserFindOptions) {
-    if (!id && !email) throw new Error('Must provide either id or email');
-
-    let query = db
+export async function findByIdOrThrow({ id }: { id: string }) {
+    return db
         .selectFrom('User')
         .innerJoin('UserSettings', 'UserSettings.userId', 'User.id')
-        .select(['User.id', 'User.email', 'User.name', 'User.image', 'User.role', 'UserSettings.theme']);
-
-    if (id) query = query.where('User.id', '=', id);
-    if (email) query = query.where('User.email', '=', email);
-
-    return query.executeTakeFirstOrThrow();
+        .select(['User.id', 'User.email', 'User.name', 'User.image', 'User.role', 'UserSettings.theme'])
+        .where('User.id', '=', id)
+        .executeTakeFirstOrThrow();
 }
 
-export async function findForCreds({ id, email }: UserFindOptions) {
-    if (!id && !email) throw new Error('Must provide either id or email');
-
-    let query = db
+export async function findByCreds({ email, password }: { email: string; password: string }) {
+    const user = await db
         .selectFrom('User')
-        .select(['User.id', 'User.email', 'User.password', 'User.role']);
+        .select(['User.id', 'User.email', 'User.password'])
+        .where('User.email', '=', email)
+        .executeTakeFirst();
 
-    if (id) query = query.where('User.id', '=', id);
-    if (email) query = query.where('User.email', '=', email);
+    if (!user) throw new Error('User not found');
 
-    return query.executeTakeFirst();
+    const allowed = await comparePassword(password, user.password);
+
+    if (!allowed) throw new Error('Invalid password');
+
+    return user;
 }
 
-export async function findForSession({ id, email }: UserFindOptions) {
-    if (!id && !email) throw new Error('Must provide either id or email');
+export async function exists({ email }: { email: string }) {
+    const user = await db.selectFrom('User').select(['User.id']).where('User.email', '=', email).executeTakeFirst();
 
-    let query = db
-        .selectFrom('User')
-        .innerJoin('UserSettings', 'UserSettings.userId', 'User.id')
-        .select(['User.id', 'User.email', 'User.name', 'User.image', 'User.role', 'UserSettings.theme']);
-
-    if (id) query = query.where('User.id', '=', id);
-    if (email) query = query.where('User.email', '=', email);
-
-    return query.executeTakeFirst();
+    return Boolean(user);
 }

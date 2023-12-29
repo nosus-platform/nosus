@@ -8,7 +8,6 @@ import { nullable } from '../../utils/nullable';
 import { useRouter } from '../../hooks/useRouter';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
-import { Text } from '../../components/Text/Text';
 
 export default () => {
     const router = useRouter();
@@ -31,8 +30,6 @@ export default () => {
     return (
         <>
             <h2>Signin</h2>
-
-            <Text>Hola!</Text>
 
             {nullable(signinMutation.error, () => (
                 <div>{JSON.stringify(humanError(signinMutation.error), null, 2)}</div>

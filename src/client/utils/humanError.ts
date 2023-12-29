@@ -1,4 +1,4 @@
-export const humanError = (error: any, tr: (key: string) => string = (key) => key) => {
+export const humanError = (error: any, tr: (key: string) => string = (key) => key): Record<string, string> | string => {
     try {
         const errorObject = JSON.parse(error.message);
 
@@ -12,7 +12,7 @@ export const humanError = (error: any, tr: (key: string) => string = (key) => ke
 
             return acc;
         }, {});
-    } catch (error) {
-        return {};
+    } catch {
+        return error.message;
     }
 };

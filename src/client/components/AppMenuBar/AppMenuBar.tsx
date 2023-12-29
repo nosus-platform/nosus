@@ -17,7 +17,7 @@ export const AppMenuBar = () => {
 
     return (
         <div className={s.AppMenuBar}>
-            {/* <Button onClick={handleSignout} text="Signout" /> */}
+            <Button onClick={handleSignout} text="Signout" />
         </div>
     );
 };
