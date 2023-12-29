@@ -1,19 +1,35 @@
 .AppNavBarItem {
     display: flex;
     align-items: center;
+    padding: var(--gap-xs) var(--gap-l);
 
     text-decoration: none;
+    color: var(--gray-400);
 
     cursor: pointer;
 
-    padding: var(--gap-xs) var(--gap-l);
-
-    color: var(--gray-400);
+    transition: background-color 100ms ease-in-out;
 
     &:hover {
-        background-color: hsl(228, 16%, 24%);
+        background-color: hsl(230, 5%, 24%);
 
         color: var(--gray-200);
+    }
+}
+
+.AppNavBarItem_active {
+    color: var(--gray-200);
+    font-weight: var(--font-weight-bold);
+
+    cursor: default;
+
+    &:hover {
+        background-color: transparent;
+    }
+
+    .AppNavBarItemIcon {
+        color: var(--primary-500);
+        /*color: hsl(315, 55%, 70%);*/
     }
 }
 

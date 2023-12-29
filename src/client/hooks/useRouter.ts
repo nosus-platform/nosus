@@ -23,13 +23,14 @@ function buildRouter<T extends BuildRoutesMap, K extends keyof T, BuildFn extend
 const base = '/nosus';
 
 export const routes = {
-    index: () => `${base}/`,
+    index: () => `${base}/dash`,
 
     authSignin: () => `${base}/auth/signin`,
     authSignup: () => `${base}/auth/signup`,
 
     tags: () => `${base}/tags`,
-    tagsId: (id: number) => `${base}/tags/${id}`,
+    tagsNew: () => `${base}/tags/new`,
+    tagsId: (id: number | string) => `${base}/tags/${id}`,
 
     api: () => `${base}/api`,
     apiAuthRefresh: () => `${base}/api/auth.refresh`,

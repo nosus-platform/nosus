@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
 
 import { nullable } from '../../utils/nullable';
@@ -18,12 +18,12 @@ interface AppNavBarItemProps {
 }
 
 export const AppNavBarItem: React.FC<AppNavBarItemProps> = ({ icon, text, to }) => (
-    <Link to={to} className={cn(s.AppNavBarItem)}>
+    <NavLink to={to} className={({ isActive }) => cn([s.AppNavBarItem, { [s.AppNavBarItem_active]: isActive }])}>
         <div className={cn(s.AppNavBarItemIcon)}>
             {nullable(icon, () => (
                 <i className={`gg-${icon}`}></i>
             ))}
         </div>
         <div className={cn(s.AppNavBarItemText)}>{text}</div>
-    </Link>
+    </NavLink>
 );

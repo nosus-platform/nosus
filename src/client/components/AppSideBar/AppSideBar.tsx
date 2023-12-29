@@ -15,16 +15,16 @@ export const AppSideBar = () => {
             </AppNavBar>
 
             <AppNavBar>
-                <AppNavBarItem to="#" icon="edit-markup" text="Posts" />
-                <AppNavBarItem to="#" text="Drafts" />
-                <AppNavBarItem to="#" text="Published" />
-                <AppNavBarItem to="#" text="Scheduled" />
+                <AppNavBarItem to="/posts" icon="edit-markup" text="Posts" />
+                <AppNavBarItem to="/posts/drafts" text="Drafts" />
+                <AppNavBarItem to="/posts/published" text="Published" />
+                <AppNavBarItem to="/posts/schedules" text="Scheduled" />
             </AppNavBar>
 
             <AppNavBar>
-                <AppNavBarItem to="#" icon="notes" text="Pages" />
+                <AppNavBarItem to="/pages" icon="notes" text="Pages" />
                 <AppNavBarItem to={routes.tags()} icon="tag" text="Tags" />
-                <AppNavBarItem to="#" icon="mail-open" text="Subscribers" />
+                <AppNavBarItem to="/subscribers" icon="mail-open" text="Subscribers" />
             </AppNavBar>
         </div>
     );

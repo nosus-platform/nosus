@@ -15,25 +15,28 @@ const LazyTagsNew = lazy(() => import('../tags/new'));
 
 const LazyError = lazy(() => import('../error'));
 
+const errorElement = <LazyError />;
+
 export const schema = createBrowserRouter([
     {
         path: routes.index(),
         element: protectedElement(<LazyIndex />),
-        errorElement: <LazyError />,
-        children: [
-            {
-                path: 'tags',
-                element: <LazyTags />,
-            },
-            {
-                path: 'tags/:id',
-                element: <LazyTagsId />,
-            },
-            {
-                path: 'tags/new',
-                element: <LazyTagsNew />,
-            },
-        ],
+        errorElement,
+    },
+    {
+        path: routes.tags(),
+        element: protectedElement(<LazyTags />),
+        errorElement,
+    },
+    {
+        path: routes.tagsId(':id'),
+        element: protectedElement(<LazyTagsId />),
+        errorElement,
+    },
+    {
+        path: routes.tagsNew(),
+        element: protectedElement(<LazyTagsNew />),
+        errorElement,
     },
     {
         path: routes.authSignup(),
