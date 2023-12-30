@@ -1,8 +1,9 @@
-import { initTRPC, TRPCError } from '@trpc/server';
-import passport from 'passport';
+import { initTRPC } from '@trpc/server';
 
 import { Context } from './trpcContext';
 import { UserSession } from '../database/queries/user';
+import { authenticate } from '../passport';
+import { handleProcedure } from './handleProcedure';
 
 export const t = initTRPC.context<Context>().create();
 export const router = t.router;
@@ -17,25 +18,10 @@ export const publicProcedure = t.procedure;
  */
 const jwt = t.middleware(async ({ next, ctx: { req, res } }) => {
     let user: Awaited<UserSession> | undefined;
-    try {
-        user = await new Promise<UserSession>((resolve, reject) => {
-            passport.authenticate(
-                'jwt',
-                { session: false },
-                (err: any, user: UserSession, info?: { message: string }) => {
-                    if (err) reject(err);
-                    if (info?.message) reject(new Error(info.message));
-                    resolve(user);
-                },
-            )(req, res);
-        });
-    } catch (error: any) {
-        throw new TRPCError({
-            code: 'UNAUTHORIZED',
-            message: error.message,
-            cause: error,
-        });
-    }
+
+    handleProcedure(async () => {
+        user = await authenticate('jwt', req, res);
+    })('UNAUTHORIZED');
 
     return next({
         ctx: { user },

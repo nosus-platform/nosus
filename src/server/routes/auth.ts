@@ -3,7 +3,7 @@ import { publicProcedure, router } from '../utils/trpc';
 import * as queries from '../database/queries';
 import { setTokensCookies, signTokens, verifyToken } from '../utils/encrypt';
 import { handleProcedure } from '../utils/handleProcedure';
-import { signin } from '../passport';
+import { authenticate } from '../passport';
 import { cookies } from '../contract/cookies';
 
 export const authRouter = router({
@@ -35,7 +35,7 @@ export const authRouter = router({
             // originally { '0': { email, password } }
             req.body = { email, password };
 
-            const user = await signin(req, res);
+            const user = await authenticate('signin', req, res);
 
             const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 

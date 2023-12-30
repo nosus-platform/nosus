@@ -44,10 +44,10 @@ export const configurePassport = (router: Router) => {
     );
 };
 
-export const signin = (req: Request, res: Response) =>
+export const authenticate = (strategy: 'signin' | 'jwt', req: Request, res: Response) =>
     new Promise<UserSession>((resolve, reject) => {
         passport.authenticate(
-            'signin',
+            strategy,
             { session: false },
             (err: any, user: UserSession, info?: { message: string }) => {
                 if (err) reject(err);
