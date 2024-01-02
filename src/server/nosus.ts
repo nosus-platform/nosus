@@ -11,7 +11,7 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { trpcRouter } from './routes';
 import { createContext } from './utils/trpcContext';
 import { configurePassport } from './passport';
-import { html } from './html';
+import { html } from './utils/html';
 
 interface NosusAppProps {
     mountPath?: string;

@@ -4,6 +4,7 @@ interface HtmlProps {
     path: string;
     themePlaceholder: 'dark' | 'light';
     localePlaceholder: 'en' | 'ru' | string;
+
     mountPathPlaceholer?: string;
 }
 
@@ -16,11 +17,16 @@ export const html = ({
     mountPathPlaceholer = '',
 }: HtmlProps) => {
     if (!existsSync(path)) throw new Error(`File ${path} does not exist`);
+
     let htmlString = readFileSync(path, 'utf-8');
 
-    htmlString = replaceAll(htmlString, 'themePlaceholder', themePlaceholder);
-    htmlString = replaceAll(htmlString, 'localePlaceholder', localePlaceholder);
-    htmlString = replaceAll(htmlString, 'mountPathPlaceholder', mountPathPlaceholer);
+    Object.entries({
+        themePlaceholder,
+        localePlaceholder,
+        mountPathPlaceholer,
+    }).forEach(([key, value]) => {
+        htmlString = replaceAll(htmlString, key, value);
+    });
 
     return htmlString;
 };

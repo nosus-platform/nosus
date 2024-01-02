@@ -2,9 +2,11 @@ import type { ViteDevServer } from 'vite';
 import express from 'express';
 
 import { createNosusApp } from './nosus';
-import { html } from './html';
+import { html } from './utils/html';
 
-import './config';
+const dotEnv = process.env.NODE_ENV !== 'production' ? require('dotenv') : null;
+
+if (dotEnv) dotEnv.config();
 
 const app = express();
 const mountPath = process.env.MOUNT_PATH || '/nosus';
@@ -19,9 +21,7 @@ const run = (port = process.env.PORT || 3000) => {
     });
 }
 
-if (process.env.NODE_ENV === 'production') {
-    run();
-}
+if (process.env.NODE_ENV === 'production') run();
 
 if (process.env.NODE_ENV === 'development') {
     require('vite')
