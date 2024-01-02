@@ -1,12 +1,27 @@
 import type { ViteDevServer } from 'vite';
 import express from 'express';
 
-import { config } from './config';
 import { createNosusApp } from './nosus';
 import { html } from './html';
 
+import './config';
+
 const app = express();
-const nosus = createNosusApp();
+const mountPath = process.env.MOUNT_PATH || '/nosus';
+const nosus = createNosusApp({
+    mountPath: process.env.NODE_ENV === 'production' ? mountPath : '',
+});
+const run = (port = process.env.PORT || 3000) => {
+    app.use(mountPath, nosus);
+
+    app.listen(port, () => {
+        console.log(`http://localhost:${port}`);
+    });
+}
+
+if (process.env.NODE_ENV === 'production') {
+    run();
+}
 
 if (process.env.NODE_ENV === 'development') {
     require('vite')
@@ -40,18 +55,6 @@ if (process.env.NODE_ENV === 'development') {
                 }
             });
 
-            app.use('/nosus', nosus);
-
-            app.listen(config.port, () => {
-                console.log(`http://localhost:${config.port}`);
-            });
+            run();
         });
-}
-
-if (process.env.NODE_ENV === 'production') {
-    app.use('/nosus', nosus);
-
-    app.listen(config.port, () => {
-        console.log(`http://localhost:${config.port}`);
-    });
 }

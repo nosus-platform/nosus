@@ -13,7 +13,11 @@ import { createContext } from './utils/trpcContext';
 import { configurePassport } from './passport';
 import { html } from './html';
 
-export const createNosusApp = () => {
+interface NosusAppProps {
+    mountPath?: string;
+}
+
+export const createNosusApp = ({ mountPath }: NosusAppProps) => {
     const nosus = Router();
 
     nosus.use(
@@ -63,6 +67,7 @@ export const createNosusApp = () => {
                             themePlaceholder: req.user?.theme || 'dark',
                             // @ts-ignore Locale is not satisfied to express-locale
                             localePlaceholder: req.locale.language,
+                            mountPathPlaceholer: mountPath,
                             path: './dist/client/index.html',
                         }),
                     );
