@@ -1,12 +1,9 @@
+import 'dotenv/config';
 import type { ViteDevServer } from 'vite';
 import express from 'express';
 
 import { createNosusApp } from './nosus';
 import { html } from './utils/html';
-
-const dotEnv = process.env.NODE_ENV !== 'production' ? require('dotenv') : null;
-
-if (dotEnv) dotEnv.config();
 
 const app = express();
 const mountPath = process.env.MOUNT_PATH || '/nosus';
@@ -19,7 +16,7 @@ const run = (port = process.env.PORT || 3000) => {
     app.listen(port, () => {
         console.log(`http://localhost:${port}`);
     });
-}
+};
 
 if (process.env.NODE_ENV === 'production') run();
 
