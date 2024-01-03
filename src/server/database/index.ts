@@ -5,10 +5,7 @@ import { DB } from './types';
 
 const dialect = new PostgresDialect({
     pool: new Pool({
-        host: process.env.DATABASE_HOST || 'localhost',
-        database: process.env.DATABASE_NAME || 'nosus',
-        user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
+        connectionString: process.env.DATABASE_URL,
         max: process.env.DATABASE_CONNECTIONS ? parseInt(process.env.DATABASE_CONNECTIONS) : 10,
     }),
 });
