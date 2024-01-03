@@ -20,6 +20,7 @@ function buildRouter<T extends BuildRoutesMap, K extends keyof T, BuildFn extend
     }, {} as BuildRouterResult<T>);
 }
 
+// FIXME: must be a part of contract folder
 const base = '/nosus';
 
 export const routes = {

@@ -12,6 +12,9 @@ import { trpcRouter } from './routes';
 import { createContext } from './utils/trpcContext';
 import { configurePassport } from './passport';
 import { html } from './utils/html';
+import { cookies } from './contract/cookies';
+import { daysToMs } from './utils/date';
+import * as queries from './database/queries';
 
 interface NosusAppProps {
     mountPath?: string;
@@ -24,10 +27,12 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
         cookieSession({
             name: 'session',
             keys: ['openreplay'],
-            maxAge: 24 * 60 * 60 * 100,
+            maxAge: daysToMs(1),
         }),
     );
+
     configurePassport(nosus);
+
     nosus.use(
         cors({
             credentials: true,
@@ -47,8 +52,21 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
         }),
     );
 
-    nosus.use('/health', (_, res) => {
-        res.status(200).end('OK');
+    nosus.use('/health', (_req, res) => {
+        res.status(200).end('Ok');
+    });
+
+    // TODO: use client routes via contract folder
+    nosus.use('/auth/*', async (_req, res, next) => {
+        const count = await queries.user.count();
+
+        if (count === 0) {
+            res.cookie(cookies.firstVisit, true, {
+                maxAge: daysToMs(1),
+            });
+        }
+
+        next();
     });
 
     if (process.env.NODE_ENV === 'production') {
@@ -65,9 +83,8 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
                         html({
                             // @ts-ignore express do not satisfy resolved user
                             themePlaceholder: req.user?.theme || 'dark',
-                            // @ts-ignore Locale is not satisfied to express-locale
                             localePlaceholder: req.locale.language,
-                            mountPathPlaceholer: mountPath,
+                            mountPathPlaceholder: mountPath,
                             path: './dist/client/index.html',
                         }),
                     );
