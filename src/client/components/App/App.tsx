@@ -1,16 +1,17 @@
-import { useContext } from 'react';
+import { lazy, useContext } from 'react';
 
 import { nullable } from '../../utils/nullable';
 import { pageContext } from '../../context/page';
 import { usePageLoading } from '../../hooks/usePageLoading';
 import { useHotkeys } from '../../hooks/useHotkeys';
-import { NotificationsStack } from '../../hooks/useNotifications';
-import { LoadingProgress } from '../LoadingProgress/LoadingProgress';
-import { NetworkStatusBar } from '../NetworkStatusBar/NetworkStatusBar';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
 import { AppMenuBar } from '../AppMenuBar/AppMenuBar';
 
 import s from './App.module.pcss';
+
+const LazyNotificationsStack = lazy(() => import('../NotificationsStack/NotificationsStack'));
+const LazyNetworkStatusBar = lazy(() => import('../NetworkStatusBar/NetworkStatusBar'));
+const LazyLoadingProgress = lazy(() => import('../LoadingProgress/LoadingProgress'));
 
 export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
     useHotkeys();
@@ -20,13 +21,13 @@ export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
 
     return (
         <>
-            <LoadingProgress ref={pageLoadingRef} />
+            <LazyLoadingProgress ref={pageLoadingRef} />
 
             {nullable(!globalNetworkStatus || !remoteNetworkStatus, () => (
-                <NetworkStatusBar global={!globalNetworkStatus} remote={!remoteNetworkStatus} />
+                <LazyNetworkStatusBar global={!globalNetworkStatus} remote={!remoteNetworkStatus} />
             ))}
 
-            <NotificationsStack />
+            <LazyNotificationsStack />
 
             <main className={s.App}>
                 <AppSideBar />

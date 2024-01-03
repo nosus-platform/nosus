@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import type { PageLoadProgressRef } from '../components/LoadingProgress/LoadingProgress';
+import type { LoadingProgressRef } from '../components/LoadingProgress/LoadingProgress';
 
 export const usePageLoading = () => {
-    const pageLoadingRef = useRef<PageLoadProgressRef>(null);
+    const pageLoadingRef = useRef<LoadingProgressRef>(null);
     const [progress, setProgress] = useState(false);
     const [prevLoc, setPrevLoc] = useState('');
     const location = useLocation();
@@ -23,11 +23,7 @@ export const usePageLoading = () => {
     }, [prevLoc]);
 
     useEffect(() => {
-        if (progress) {
-            pageLoadingRef.current?.start();
-        } else {
-            pageLoadingRef.current?.done();
-        }
+        progress ? pageLoadingRef.current?.start() : pageLoadingRef.current?.done();
     }, [progress]);
 
     return pageLoadingRef;

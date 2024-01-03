@@ -5,7 +5,7 @@ interface NetworkStatusBarProps {
     remote?: boolean;
 }
 
-export const NetworkStatusBar: React.FC<NetworkStatusBarProps> = ({ global, remote }) => {
+export default ({ global, remote }: NetworkStatusBarProps) => {
     const message: string[] = [];
 
     if (global) {

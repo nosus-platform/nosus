@@ -19,7 +19,7 @@ interface LoadingProgressProps extends React.HTMLAttributes<HTMLDivElement> {
     height?: number;
 }
 
-export interface LoadProgressRef {
+export interface LoadingProgressRef {
     start: () => void;
     done: () => void;
 }
@@ -72,7 +72,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
     }
 };
 
-export const LoadingProgress = forwardRef<LoadProgressRef, LoadingProgressProps>(
+export default forwardRef<LoadingProgressRef, LoadingProgressProps>(
     ({ className, color = 'var(--blue-500)', start = 0.05, max = 0.995, height = 2, style, ...attrs }, ref) => {
         const barRef = useRef<HTMLDivElement>(null);
         const [{ state, progress }, dispatch] = useReducer(reducer, {
