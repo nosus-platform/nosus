@@ -5,7 +5,7 @@ interface HtmlProps {
     themePlaceholder: 'dark' | 'light';
     localePlaceholder: 'en' | 'ru' | string;
 
-    mountPathPlaceholer?: string;
+    mountPathPlaceholder?: string;
 }
 
 const replaceAll = (str: string, find: string, replace: string) => str.replace(new RegExp(find, 'g'), replace);
@@ -14,7 +14,7 @@ export const html = ({
     themePlaceholder = 'dark',
     localePlaceholder = 'en',
     path,
-    mountPathPlaceholer = '',
+    mountPathPlaceholder = '',
 }: HtmlProps) => {
     if (!existsSync(path)) throw new Error(`File ${path} does not exist`);
 
@@ -23,7 +23,7 @@ export const html = ({
     Object.entries({
         themePlaceholder,
         localePlaceholder,
-        mountPathPlaceholer,
+        mountPathPlaceholder,
     }).forEach(([key, value]) => {
         htmlString = replaceAll(htmlString, key, value);
     });
