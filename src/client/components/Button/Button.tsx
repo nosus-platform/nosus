@@ -33,16 +33,18 @@ interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'chi
     view?: keyof typeof viewMap;
     brick?: keyof typeof brickMap;
     size?: keyof typeof sizeMap;
+    stretched?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, iconLeft, iconRight, text, view = 'default', brick, size = 's', ...rest }, ref) => {
+    ({ className, iconLeft, iconRight, text, view = 'default', brick, size = 's', stretched, ...rest }, ref) => {
         const icons = [iconLeft, iconRight].filter(Boolean);
         const classes = [
             s.Button,
             viewMap[view],
             sizeMap[size],
             brick ? [s.Button_brick, brickMap[brick]] : '',
+            stretched ? s.Button_stretched : '',
             className,
         ];
 
