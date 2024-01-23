@@ -28,6 +28,7 @@ export const routes = {
 
     authSignin: () => `${base}/auth/signin`,
     authSignup: () => `${base}/auth/signup`,
+    authBootstrap: () => `${base}/auth/bootstrap`,
 
     tags: () => `${base}/tags`,
     tagsNew: () => `${base}/tags/new`,
@@ -35,6 +36,10 @@ export const routes = {
 
     api: () => `${base}/api`,
     apiAuthRefresh: () => `${base}/api/auth.refresh`,
+
+    docs: () => '/docs',
+    releases: () => '/releases',
+    slack: () => '/slack',
 };
 
 export const useRouter = () => {

@@ -3,11 +3,13 @@ import { useTheme } from 'next-themes';
 import { DocumentTextIcon, TagIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 import { trpc } from '../../utils/trpc';
-import type { SignupSchema } from '../../../server/contract/schema/auth';
+import type { FirstSignupSchema } from '../../../server/contract/schema/auth';
 import { useForm } from '../../hooks/useForm';
 import { humanError } from '../../utils/humanError';
 import { nullable } from '../../utils/nullable';
 import { routes, useRouter } from '../../hooks/useRouter';
+import { useCookie } from '../../hooks/useCookie';
+import { cookies } from '../../../server/contract/cookies';
 import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import { AuthPage } from '../../components/AuthPage/AuthPage';
@@ -22,32 +24,35 @@ import { AuthPromoList, AuthPromoListItem } from '../../components/AuthPromoList
 export default () => {
     const router = useRouter();
     const { resolvedTheme: theme } = useTheme();
+    const { deleteCookie: deleteFirstVisitCookie } = useCookie(cookies.firstVisit);
 
-    const signupForm = useForm<SignupSchema>({
+    const firstSignupForm = useForm<FirstSignupSchema>({
         email: '',
         password: '',
+        project: '',
         theme,
     });
 
-    const signupMutation = trpc.auth.signup.useMutation();
+    const firstSignupMutation = trpc.auth.firstSignup.useMutation();
 
     const onSubmit = useCallback(
-        async (data: SignupSchema) => {
-            await signupMutation.mutateAsync(data as SignupSchema);
+        async (data: FirstSignupSchema) => {
+            await firstSignupMutation.mutateAsync(data as FirstSignupSchema);
 
-            if (signupMutation.isSuccess) {
+            if (firstSignupMutation.isSuccess) {
+                deleteFirstVisitCookie();
                 router.index();
             }
         },
-        [signupMutation, router],
+        [firstSignupMutation, router],
     );
 
     return (
         <AuthPage>
             <div>
                 <AuthPromo
-                    title="Ready to join?"
-                    description="Connect with your team in one step. Complete your credentials and start collaborate."
+                    title="Let's publish?"
+                    description="Create your first blog in one step. Complete blog name and administrator credentials."
                 >
                     <AuthPromoList>
                         <AuthPromoListItem to={routes.docs()} icon={<DocumentTextIcon />} text="Read the docs" />
@@ -63,23 +68,30 @@ export default () => {
 
             <div>
                 <AuthForm
-                    title="Sign up"
-                    description="Please enter your details"
-                    onSubmit={signupForm.handleSubmit(onSubmit)}
+                    title="Welcome to Nosus"
+                    description="Blogging platform w/o pitfalls"
+                    onSubmit={firstSignupForm.handleSubmit(onSubmit)}
                 >
-                    {nullable(signupMutation.error, (err) => (
+                    {nullable(firstSignupMutation.error, (err) => (
                         <div>{JSON.stringify(humanError(err), null, 2)}</div>
                     ))}
 
-                    <FormField {...signupForm.register('email')}>
+                    <FormField {...firstSignupForm.register('email')}>
                         <FormFieldLabel>Email</FormFieldLabel>
                         <FormFieldInput>
                             <Input autoComplete="on" autoFocus />
                         </FormFieldInput>
                     </FormField>
 
-                    <FormField {...signupForm.register('password')}>
+                    <FormField {...firstSignupForm.register('password')}>
                         <FormFieldLabel>Password</FormFieldLabel>
+                        <FormFieldInput>
+                            <Input />
+                        </FormFieldInput>
+                    </FormField>
+
+                    <FormField {...firstSignupForm.register('project')}>
+                        <FormFieldLabel>Blog name</FormFieldLabel>
                         <FormFieldInput>
                             <Input />
                         </FormFieldInput>

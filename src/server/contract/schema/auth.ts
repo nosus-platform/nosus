@@ -21,3 +21,9 @@ export const signupSchema = z.object({
 });
 
 export type SignupSchema = z.infer<typeof signupSchema>;
+
+export const firstSignupSchema = signupSchema.extend({
+    project: z.string().min(3, { message: 'Blog name must be longer than 3 symbols' }),
+});
+
+export type FirstSignupSchema = z.infer<typeof firstSignupSchema>;

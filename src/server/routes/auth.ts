@@ -1,4 +1,4 @@
-import { signinSchema, signupSchema } from '../contract/schema/auth';
+import { firstSignupSchema, signinSchema, signupSchema } from '../contract/schema/auth';
 import { publicProcedure, router } from '../utils/trpc';
 import * as queries from '../database/queries';
 import { setTokensCookies, signTokens, verifyToken } from '../utils/encrypt';
@@ -29,6 +29,31 @@ export const authRouter = router({
             });
         })('FORBIDDEN'),
     ),
+    firstSignup: publicProcedure.input(firstSignupSchema).mutation(async ({ input: { email, password, theme, project }, ctx: { res } }) =>
+        handleProcedure(async () => {
+            const user = await queries.user.createFirstAdmin(
+                {
+                    email,
+                    password,
+                },
+                {
+                    theme,
+                },
+                {
+                    title: project,
+                }
+            );
+
+            const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
+
+            setTokensCookies(res, {
+                token,
+                tokenExpDays,
+                refreshToken,
+                refreshTokenExpDays,
+            });
+        })('FORBIDDEN'),
+    ),
     signin: publicProcedure.input(signinSchema).mutation(async ({ input: { email, password }, ctx: { req, res } }) =>
         handleProcedure(async () => {
             // trpc batch data with array
@@ -47,11 +72,12 @@ export const authRouter = router({
             });
 
             return { days: tokenExpDays, token, refreshToken };
-        })('UNAUTHORIZED'),
+        })('FORBIDDEN'),
     ),
     refresh: publicProcedure.mutation(async ({ ctx: { req, res } }) => handleProcedure(async () => {
         const decoded = verifyToken(req.cookies[cookies.refreshToken]);
 
+        // FIXME: move into verifyToken
         if (typeof decoded === 'string' || !decoded.id) return;
 
         const user = await queries.user.findByIdOrThrow({ id: decoded.id });

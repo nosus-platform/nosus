@@ -1,7 +1,8 @@
 import { Insertable } from 'kysely';
+import slugify from 'slugify';
 
 import { db } from '..';
-import { User, UserSettings } from '../types';
+import { User, UserSettings, Role, Project } from '../types';
 import { comparePassword, encryptPassword } from '../../utils/encrypt';
 
 export type UserSession = ReturnType<typeof findByIdOrThrow>;
@@ -11,6 +12,7 @@ export async function create(u: Insertable<User>, s: Omit<Insertable<UserSetting
         const user = await trx
             .insertInto('User')
             .values({
+                role: Role.USER,
                 ...u,
                 password: await encryptPassword(u.password),
             })
@@ -22,6 +24,44 @@ export async function create(u: Insertable<User>, s: Omit<Insertable<UserSetting
             .values({
                 ...s,
                 userId: user.id,
+            })
+            .executeTakeFirstOrThrow();
+
+        return user;
+    });
+}
+
+export async function createFirstAdmin(
+    u: Insertable<User>,
+    s: Omit<Insertable<UserSettings>, 'userId'>,
+    p: Omit<Insertable<Project>, 'ownerId' | 'slug'>,
+) {
+    return db.transaction().execute(async (trx) => {
+        const defaultRole = Role.ADMIN;
+        const user = await trx
+            .insertInto('User')
+            .values({
+                role: defaultRole,
+                ...u,
+                password: await encryptPassword(u.password),
+            })
+            .returningAll()
+            .executeTakeFirstOrThrow();
+
+        await trx
+            .insertInto('UserSettings')
+            .values({
+                ...s,
+                userId: user.id,
+            })
+            .executeTakeFirstOrThrow();
+
+        await trx
+            .insertInto('Project')
+            .values({
+                ...p,
+                slug: slugify(p.title),
+                ownerId: user.id,
             })
             .executeTakeFirstOrThrow();
 
@@ -59,3 +99,15 @@ export async function exists({ email }: { email: string }) {
 
     return Boolean(user);
 }
+
+export async function count() {
+    const count = await db.selectFrom('User').select((so) => so.fn.count('User.id').as('value')).executeTakeFirst();
+
+    if (!count?.value) return 0;
+
+    if (typeof count.value === 'string') return parseInt(count.value, 10);
+
+    return Number(count.value);
+}
+
+

@@ -5,6 +5,7 @@ export function useForm<T = {}>(defaultValue: Record<keyof T, any> = {} as T) {
 
     return {
         register: (fieldName: keyof T) => ({
+            id: fieldName,
             name: fieldName,
             value: formState[fieldName],
             onChange: (e: any) => {

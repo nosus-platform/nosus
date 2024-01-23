@@ -6,6 +6,7 @@ import { routes } from '../../hooks/useRouter';
 
 const LazyIndex = lazy(() => import('../index'));
 
+const LazyBootstrap = lazy(() => import('../auth/bootstrap'));
 const LazySignup = lazy(() => import('../auth/signup'));
 const LazySignin = lazy(() => import('../auth/signin'));
 
@@ -37,6 +38,10 @@ export const schema = createBrowserRouter([
         path: routes.tagsNew(),
         element: protectedElement(<LazyTagsNew />),
         errorElement,
+    },
+    {
+        path: routes.authBootstrap(),
+        element: publicElement(<LazyBootstrap />),
     },
     {
         path: routes.authSignup(),
