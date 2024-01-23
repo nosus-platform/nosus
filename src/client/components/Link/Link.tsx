@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes, forwardRef } from 'react';
+import React, { AnchorHTMLAttributes, forwardRef, useMemo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -15,11 +15,16 @@ const viewMap = {
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     view?: keyof typeof viewMap;
     to?: string;
+    color?: string;
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-    ({ children, className, view = 'primary', to, ...rest }, ref) => {
+    ({ className, view = 'primary', to, color, ...rest }, ref) => {
         const classes = [s.Link, viewMap[view], className];
+
+        const style = useMemo(() => ({
+            '--link-color': color,
+        }) as React.CSSProperties, [color]);
 
         const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
             if (e.metaKey || e.ctrlKey || !rest.onClick) return;
@@ -31,6 +36,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         const linkProps: LinkProps & React.RefAttributes<HTMLAnchorElement> = {
             className: cn(classes),
             ref,
+            style,
             onClick,
             ...rest,
         };
