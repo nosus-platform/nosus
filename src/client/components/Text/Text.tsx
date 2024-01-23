@@ -45,7 +45,7 @@ export const Text: React.FC<TextProps> = forwardRef(
 
             if (color) vars['--text-color'] = color;
             if (size) vars['--text-size'] = `var(--font-size-${size})`;
-            if (weight) vars['--text-weight'] = `var(--font-weight-${size})`;
+            if (weight) vars['--text-weight'] = `var(--font-weight-${weight})`;
             if (wordBreak) vars.wordBreak = wordBreak;
             if (wordWrap) vars.wordWrap = wordWrap;
             if (lines) vars['--text-lines'] = lines;
