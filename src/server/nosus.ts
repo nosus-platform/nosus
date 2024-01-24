@@ -95,6 +95,8 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
             } else {
                 next();
             }
+        } else {
+            next();
         }
     });
 
