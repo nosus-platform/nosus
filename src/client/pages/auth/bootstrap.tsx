@@ -22,14 +22,14 @@ export default () => {
     const router = useRouter();
     const { resolvedTheme: theme } = useTheme();
 
-    const firstSignupForm = useForm<FirstSignupSchema>({
+    const firstSignupMutation = trpc.auth.firstSignup.useMutation();
+
+    const { register, handleSubmit } = useForm<FirstSignupSchema>({
         email: '',
         password: '',
         project: '',
         theme,
     });
-
-    const firstSignupMutation = trpc.auth.firstSignup.useMutation();
 
     const onSubmit = useCallback(
         async (data: FirstSignupSchema) => {
@@ -65,27 +65,27 @@ export default () => {
                 <AuthForm
                     title="Welcome to Nosus"
                     description="Blogging platform w/o pitfalls"
-                    onSubmit={firstSignupForm.handleSubmit(onSubmit)}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     {nullable(firstSignupMutation.error, (err) => (
                         <div>{JSON.stringify(humanError(err), null, 2)}</div>
                     ))}
 
-                    <FormField {...firstSignupForm.register('email')}>
+                    <FormField {...register('email')}>
                         <FormFieldLabel>Email</FormFieldLabel>
                         <FormFieldInput>
                             <Input autoComplete="on" autoFocus />
                         </FormFieldInput>
                     </FormField>
 
-                    <FormField {...firstSignupForm.register('password')}>
+                    <FormField {...register('password')}>
                         <FormFieldLabel>Password</FormFieldLabel>
                         <FormFieldInput>
                             <Input />
                         </FormFieldInput>
                     </FormField>
 
-                    <FormField {...firstSignupForm.register('project')}>
+                    <FormField {...register('project')}>
                         <FormFieldLabel>Blog name</FormFieldLabel>
                         <FormFieldInput>
                             <Input />

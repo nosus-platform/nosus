@@ -24,7 +24,7 @@ export default () => {
     const router = useRouter();
     const { resolvedTheme: theme } = useTheme();
 
-    const signupForm = useForm<SignupSchema>({
+    const { register, handleSubmit } = useForm<SignupSchema>({
         email: '',
         password: '',
         theme,
@@ -66,20 +66,20 @@ export default () => {
                 <AuthForm
                     title="Sign up"
                     description="Please enter your details"
-                    onSubmit={signupForm.handleSubmit(onSubmit)}
+                    onSubmit={handleSubmit(onSubmit)}
                 >
                     {nullable(signupMutation.error, (err) => (
                         <div>{JSON.stringify(humanError(err), null, 2)}</div>
                     ))}
 
-                    <FormField {...signupForm.register('email')}>
+                    <FormField {...register('email')}>
                         <FormFieldLabel>Email</FormFieldLabel>
                         <FormFieldInput>
                             <Input autoComplete="on" autoFocus />
                         </FormFieldInput>
                     </FormField>
 
-                    <FormField {...signupForm.register('password')}>
+                    <FormField {...register('password')}>
                         <FormFieldLabel>Password</FormFieldLabel>
                         <FormFieldInput>
                             <Input />

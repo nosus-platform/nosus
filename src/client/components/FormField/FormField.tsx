@@ -45,5 +45,5 @@ export const FormFieldInput: React.FC<FormFieldProps> = ({ className, children }
 };
 
 export const FormFieldDescription: React.FC<FormFieldProps> = ({ className, children }) => {
-    return <div className={cn(s.FormFieldDescription, className)}>{children}</div>;
+    return <Text size="s" className={cn(s.FormFieldDescription, className)}>{children}</Text>;
 };
