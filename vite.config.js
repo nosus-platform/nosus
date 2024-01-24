@@ -9,5 +9,5 @@ if (process.env.ANALYZE) {
 }
 
 export default defineConfig({
-  plugins,
+    plugins,
 });

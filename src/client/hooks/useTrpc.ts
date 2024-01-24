@@ -4,9 +4,11 @@ import { httpBatchLink } from '@trpc/client';
 
 import { routes } from '../../server/contract/routes';
 import { trpc } from '../utils/trpc';
+
 import { useAuth } from './useAuth';
 import { useRouter } from './useRouter';
 
+// eslint-disable-next-line no-confusing-arrow
 const authHeader = (token?: string) =>
     !token
         ? Object.create({})
@@ -47,6 +49,7 @@ export const usePrivateTrpc = () => {
                                 }
 
                                 const newCreds = await refreshTokenRes.json();
+
                                 return fetch(input, {
                                     ...init,
                                     headers: {

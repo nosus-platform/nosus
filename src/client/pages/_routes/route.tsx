@@ -35,23 +35,23 @@ const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => 
         if (!authorized && !refreshToken) {
             router.authSignin();
         }
-    }, [authorized]);
+    }, [authorized, refreshToken, router]);
 
     useEffect(() => {
         if (refreshToken && !token && !authRefreshMutation.isLoading) {
             (async () => {
                 const data = await authRefreshMutation.mutateAsync(undefined);
 
-                data ? updateTokens(data.token, data.refreshToken) : router.authSignin();
+                if (data) {
+                    updateTokens(data.token, data.refreshToken);
+                } else {
+                    router.authSignin();
+                }
             })();
         }
-    }, [authRefreshMutation, token]);
+    }, [authRefreshMutation, refreshToken, router, token, updateTokens]);
 
-    return nullable(authorized, () => (
-        <pageContext.Provider value={context}>
-            {children}
-        </pageContext.Provider>
-    ));
+    return nullable(authorized, () => <pageContext.Provider value={context}>{children}</pageContext.Provider>);
 };
 
 export const Protected: React.FC<React.PropsWithChildren> = ({ children }) => (

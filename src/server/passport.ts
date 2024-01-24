@@ -49,7 +49,7 @@ export const authenticate = (strategy: 'signin' | 'jwt', req: Request, res: Resp
         passport.authenticate(
             strategy,
             { session: false },
-            (err: any, user: UserSession, info?: { message: string }) => {
+            (err: unknown, user: UserSession, info?: { message: string }) => {
                 if (err) reject(err);
 
                 if (info?.message) reject(info.message);

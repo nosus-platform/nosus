@@ -5,7 +5,7 @@ interface UseOfflineDetectorProps {
     remoteServerUrl?: string;
 
     setStatus?: ([global, remote]: [boolean, boolean]) => void;
-};
+}
 
 export const useOfflineDetector = ({
     setStatus,
@@ -17,10 +17,13 @@ export const useOfflineDetector = ({
 
     let timeout: NodeJS.Timeout;
 
-    const toggleStatus = useCallback((global: boolean) => () => {
-        setGlobalOnlineStatus(global);
-        setStatus?.([global, remoteServerStatus]);
-    }, [setStatus]);
+    const toggleStatus = useCallback(
+        (global: boolean) => () => {
+            setGlobalOnlineStatus(global);
+            setStatus?.([global, remoteServerStatus]);
+        },
+        [remoteServerStatus, setStatus],
+    );
 
     useEffect(() => {
         window.addEventListener('online', toggleStatus(true));
@@ -50,6 +53,7 @@ export const useOfflineDetector = ({
 
             clearTimeout(timeout);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return [globalOnlineStatus, remoteServerStatus];

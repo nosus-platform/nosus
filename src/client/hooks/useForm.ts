@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-export function useForm<T = {}>(defaultValue: Record<keyof T, any> = {} as T) {
+export function useForm<T = object>(defaultValue: Record<keyof T, any> = {} as T) {
     const [formState, setFormState] = useState<T>(defaultValue);
 
     return {

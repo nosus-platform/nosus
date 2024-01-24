@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+
 import { cookies } from '../../server/contract/cookies';
 
 export const useCookie = (cookieName: cookies, interval?: number) => {
@@ -17,7 +18,7 @@ export const useCookie = (cookieName: cookies, interval?: number) => {
         return () => {
             clearInterval(id);
         };
-    }, [interval]);
+    }, [cookieName, interval]);
 
     const updateCookie = useCallback(
         (newValue: string, options?: Cookies.CookieAttributes) => {

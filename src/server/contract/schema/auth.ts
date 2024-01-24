@@ -15,6 +15,7 @@ export const signupSchema = z.object({
     theme: z.string(),
     email: emailField.refine(async (email) => {
         const exists = await queries.user.exists({ email });
+
         return !exists;
     }, 'User already exists'),
     password: z.string().min(6, { message: 'Password must be longer than 6 symbols' }),

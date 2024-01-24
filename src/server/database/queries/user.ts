@@ -99,13 +99,14 @@ export async function exists({ email }: { email: string }) {
 }
 
 export async function count() {
-    const count = await db.selectFrom('User').select((so) => so.fn.count('User.id').as('value')).executeTakeFirst();
+    const c = await db
+        .selectFrom('User')
+        .select((so) => so.fn.count('User.id').as('value'))
+        .executeTakeFirst();
 
-    if (!count?.value) return 0;
+    if (!c?.value) return 0;
 
-    if (typeof count.value === 'string') return parseInt(count.value, 10);
+    if (typeof c.value === 'string') return parseInt(c.value, 10);
 
-    return Number(count.value);
+    return Number(c.value);
 }
-
-

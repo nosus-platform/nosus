@@ -14,6 +14,7 @@ const run = (port = process.env.PORT || 3000) => {
     app.use(mountPath, nosus);
 
     app.listen(port, () => {
+        // eslint-disable-next-line no-console
         console.log(`http://localhost:${port}`);
     });
 };
@@ -21,6 +22,7 @@ const run = (port = process.env.PORT || 3000) => {
 if (process.env.NODE_ENV === 'production') run();
 
 if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line global-require, @typescript-eslint/no-var-requires
     require('vite')
         .createServer({
             server: {

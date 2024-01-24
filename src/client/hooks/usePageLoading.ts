@@ -16,14 +16,18 @@ export const usePageLoading = () => {
         if (location.pathname === prevLoc) {
             setPrevLoc('');
         }
-    }, [location]);
+    }, [location, prevLoc]);
 
     useEffect(() => {
         setProgress(false);
     }, [prevLoc]);
 
     useEffect(() => {
-        progress ? pageLoadingRef.current?.start() : pageLoadingRef.current?.done();
+        if (progress) {
+            pageLoadingRef.current?.start();
+        } else {
+            pageLoadingRef.current?.done();
+        }
     }, [progress]);
 
     return pageLoadingRef;

@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from 'react';
 
-import { useCookie } from './useCookie';
 import { cookies } from '../../server/contract/cookies';
+
+import { useCookie } from './useCookie';
 
 export const useAuth = () => {
     const {
@@ -14,13 +15,13 @@ export const useAuth = () => {
         updateCookie: updateRefreshToken,
         deleteCookie: deleteRefreshToken,
     } = useCookie(cookies.refreshToken);
-    const updateTokens = useCallback((token: string, refreshToken: string) => {
-        updateToken(token);
-        updateRefreshToken(refreshToken);
-    }, [
-        updateToken,
-        updateRefreshToken,
-    ]);
+    const updateTokens = useCallback(
+        (token: string, refreshToken: string) => {
+            updateToken(token);
+            updateRefreshToken(refreshToken);
+        },
+        [updateToken, updateRefreshToken],
+    );
     const userId = useMemo(() => {
         if (authTokenCookie) {
             const base64Url = authTokenCookie.split('.')[1];
@@ -29,7 +30,7 @@ export const useAuth = () => {
                 window
                     .atob(base64)
                     .split('')
-                    .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                    .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
                     .join(''),
             );
 

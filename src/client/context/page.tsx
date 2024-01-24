@@ -30,12 +30,12 @@ export const PageContext: React.FC<React.PropsWithChildren> = ({ children }) => 
             globalNetworkStatus,
             remoteNetworkStatus,
         }),
-        [globalNetworkStatus, remoteNetworkStatus],
+        [globalNetworkStatus, networkStatus, remoteNetworkStatus],
     );
 
     useEffect(() => {
         onlineManager.setOnline(networkStatus);
-    }, [globalNetworkStatus, remoteNetworkStatus]);
+    }, [globalNetworkStatus, networkStatus, remoteNetworkStatus]);
 
     return <pageContext.Provider value={context}>{children}</pageContext.Provider>;
 };

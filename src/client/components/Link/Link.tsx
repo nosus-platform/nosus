@@ -22,9 +22,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     ({ className, view = 'primary', to, color, ...rest }, ref) => {
         const classes = [s.Link, viewMap[view], className];
 
-        const style = useMemo(() => ({
-            '--link-color': color,
-        }) as React.CSSProperties, [color]);
+        const style = useMemo(
+            () =>
+                ({
+                    '--link-color': color,
+                }) as React.CSSProperties,
+            [color],
+        );
 
         const onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
             if (e.metaKey || e.ctrlKey || !rest.onClick) return;

@@ -11,5 +11,9 @@ interface FormTipProps {
 }
 
 export const FormTip: React.FC<FormTipProps> = ({ className, children }) => {
-    return <Text size="s" className={cn(s.FormTip, className)}>{children}</Text>;
+    return (
+        <Text size="s" className={cn(s.FormTip, className)}>
+            {children}
+        </Text>
+    );
 };

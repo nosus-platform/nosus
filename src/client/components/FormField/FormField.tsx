@@ -1,11 +1,11 @@
 import cn from 'classnames';
+import { useContext } from 'react';
 
 import type { FormFieldContextProps } from '../../context/formField';
 import { formFieldContext } from '../../context/formField';
 import { Text } from '../Text/Text';
 
 import s from './FormField.module.pcss';
-import { useContext } from 'react';
 
 interface FormFieldProps extends FormFieldContextProps {
     children: React.ReactNode;
@@ -45,5 +45,9 @@ export const FormFieldInput: React.FC<FormFieldProps> = ({ className, children }
 };
 
 export const FormFieldDescription: React.FC<FormFieldProps> = ({ className, children }) => {
-    return <Text size="s" className={cn(s.FormFieldDescription, className)}>{children}</Text>;
+    return (
+        <Text size="s" className={cn(s.FormFieldDescription, className)}>
+            {children}
+        </Text>
+    );
 };

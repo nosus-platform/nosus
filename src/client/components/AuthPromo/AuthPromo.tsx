@@ -17,7 +17,9 @@ export const AuthPromo: React.FC<AuthPromoProps> = ({ children, title, descripti
         <div className={cn(s.AuthPromo, className)}>
             <div className={s.AuthPromoContent}>
                 <h1 className={s.AuthPromoTitle}>{title}</h1>
-                <Text as="p" size="l" className={s.AuthPromoDescription}>{description}</Text>
+                <Text as="p" size="l" className={s.AuthPromoDescription}>
+                    {description}
+                </Text>
 
                 {children}
             </div>

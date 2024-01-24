@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     iconRight ? s.Wrapper_icon_right : '',
                 )}
             >
-                <input className={cn(classes)} ref={ref} {...{...formFieldCtx, ...rest}} />
+                <input className={cn(classes)} ref={ref} {...{ ...formFieldCtx, ...rest }} />
 
                 {nullable(iconLeft, (icon) => (
                     <span className={cn(s.Icon, s.Icon_left)}>{icon}</span>

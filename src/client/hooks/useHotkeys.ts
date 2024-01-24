@@ -9,6 +9,7 @@ export function isEventTargetInputOrTextArea(eventTarget: EventTarget | null) {
     if (eventTarget === null) return false;
 
     const eventTargetTagName = (eventTarget as HTMLElement).tagName.toLowerCase();
+
     return ['input', 'textarea'].includes(eventTargetTagName);
 }
 
@@ -31,7 +32,6 @@ export const createHotkeys = (...args: HotkeyDeclaration[]): Record<string, (e: 
 
     return declarations;
 };
-
 
 export const useHotkeys = () => {
     const router = useRouter();

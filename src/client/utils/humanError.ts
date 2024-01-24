@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const humanError = (error: any, tr: (key: string) => string = (key) => key): Record<string, string> | string => {
     try {
         const errorObject = JSON.parse(error.message);

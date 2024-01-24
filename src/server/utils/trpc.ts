@@ -1,11 +1,12 @@
 import { initTRPC } from '@trpc/server';
 
-import { Context } from './trpcContext';
 import { authenticate } from '../passport';
+
+import { Context } from './trpcContext';
 import { handleProcedure } from './handleProcedure';
 
 export const t = initTRPC.context<Context>().create();
-export const router = t.router;
+export const { router } = t;
 export const publicProcedure = t.procedure;
 
 /**
@@ -16,7 +17,7 @@ export const publicProcedure = t.procedure;
  * trade-off for not to support express routes for public API and trpc for private.
  */
 const jwt = t.middleware(async ({ next, ctx: { req, res } }) => {
-    let user = await handleProcedure(() => authenticate('jwt', req, res))('UNAUTHORIZED');
+    const user = await handleProcedure(() => authenticate('jwt', req, res))('UNAUTHORIZED');
 
     return next({
         ctx: { user },

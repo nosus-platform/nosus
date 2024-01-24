@@ -63,11 +63,7 @@ export default () => {
             </div>
 
             <div>
-                <AuthForm
-                    title="Sign up"
-                    description="Please enter your details"
-                    onSubmit={handleSubmit(onSubmit)}
-                >
+                <AuthForm title="Sign up" description="Please enter your details" onSubmit={handleSubmit(onSubmit)}>
                     {nullable(signupMutation.error, (err) => (
                         <div>{JSON.stringify(humanError(err), null, 2)}</div>
                     ))}

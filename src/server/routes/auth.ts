@@ -29,31 +29,33 @@ export const authRouter = router({
             });
         })('FORBIDDEN'),
     ),
-    firstSignup: publicProcedure.input(firstSignupSchema).mutation(async ({ input: { email, password, theme, project }, ctx: { res } }) =>
-        handleProcedure(async () => {
-            const user = await queries.user.createFirstAdmin(
-                {
-                    email,
-                    password,
-                },
-                {
-                    theme,
-                },
-                {
-                    title: project,
-                }
-            );
+    firstSignup: publicProcedure
+        .input(firstSignupSchema)
+        .mutation(async ({ input: { email, password, theme, project }, ctx: { res } }) =>
+            handleProcedure(async () => {
+                const user = await queries.user.createFirstAdmin(
+                    {
+                        email,
+                        password,
+                    },
+                    {
+                        theme,
+                    },
+                    {
+                        title: project,
+                    },
+                );
 
-            const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
+                const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 
-            setTokensCookies(res, {
-                token,
-                tokenExpDays,
-                refreshToken,
-                refreshTokenExpDays,
-            });
-        })('FORBIDDEN'),
-    ),
+                setTokensCookies(res, {
+                    token,
+                    tokenExpDays,
+                    refreshToken,
+                    refreshTokenExpDays,
+                });
+            })('FORBIDDEN'),
+        ),
     signin: publicProcedure.input(signinSchema).mutation(async ({ input: { email, password }, ctx: { req, res } }) =>
         handleProcedure(async () => {
             // trpc batch data with array
@@ -74,23 +76,25 @@ export const authRouter = router({
             return { days: tokenExpDays, token, refreshToken };
         })('FORBIDDEN'),
     ),
-    refresh: publicProcedure.mutation(async ({ ctx: { req, res } }) => handleProcedure(async () => {
-        const decoded = verifyToken(req.cookies[cookies.refreshToken]);
+    refresh: publicProcedure.mutation(async ({ ctx: { req, res } }) =>
+        handleProcedure(async () => {
+            const decoded = verifyToken(req.cookies[cookies.refreshToken]);
 
-        // FIXME: move into verifyToken
-        if (typeof decoded === 'string' || !decoded.id) return;
+            // FIXME: move into verifyToken
+            if (typeof decoded === 'string' || !decoded.id) return;
 
-        const user = await queries.user.findByIdOrThrow({ id: decoded.id });
+            const user = await queries.user.findByIdOrThrow({ id: decoded.id });
 
-        const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
+            const { token, tokenExpDays, refreshToken, refreshTokenExpDays } = signTokens(user.id);
 
-        setTokensCookies(res, {
-            token,
-            tokenExpDays,
-            refreshToken,
-            refreshTokenExpDays,
-        });
+            setTokensCookies(res, {
+                token,
+                tokenExpDays,
+                refreshToken,
+                refreshTokenExpDays,
+            });
 
-        return { token, refreshToken };
-    })('UNAUTHORIZED')),
+            return { token, refreshToken };
+        })('UNAUTHORIZED'),
+    ),
 });

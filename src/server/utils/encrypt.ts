@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// @see https://github.com/nosus-platform/nosus/issues/4
 import { Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { cookies } from '../contract/cookies';
+
 import { daysToMs } from './date';
 
 export const encryptPassword = (password: string) => bcrypt.hash(password, 10);

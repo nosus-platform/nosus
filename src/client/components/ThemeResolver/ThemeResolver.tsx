@@ -7,22 +7,15 @@ import './ThemeResolver.module.pcss';
 
 const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
     const currentPageContext = useContext(pageContext);
-    const { resolvedTheme, systemTheme, setTheme } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
     const syncTheme = (currentPageContext?.user?.theme || resolvedTheme || 'dark') as 'light' | 'dark';
     const context = useMemo<PageContextProps>(
         () => ({
             ...currentPageContext,
             theme: syncTheme,
         }),
-        [currentPageContext],
+        [currentPageContext, syncTheme],
     );
-
-    if (currentPageContext?.user?.theme && currentPageContext?.user?.theme !== systemTheme) {
-        // TODO: add popup message with action buttons
-        console.log(
-            `Your theme(${currentPageContext?.user?.theme}) and system appereance are different(${systemTheme}). Do you want to Nosus follow it?`,
-        );
-    }
 
     useEffect(() => {
         // save css variables pass
@@ -36,7 +29,7 @@ const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
         }
 
         setTheme(syncTheme);
-    }, [syncTheme]);
+    }, [setTheme, syncTheme]);
 
     return <pageContext.Provider value={context}>{children}</pageContext.Provider>;
 };

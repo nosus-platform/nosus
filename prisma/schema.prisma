@@ -3,7 +3,7 @@
 generator kysely {
   provider = "prisma-kysely"
   output   = "../src/server/database"
-  fileName  = "types.ts"
+  fileName = "types.ts"
 }
 
 datasource db {

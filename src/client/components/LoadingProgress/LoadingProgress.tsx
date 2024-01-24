@@ -86,10 +86,10 @@ export default forwardRef<LoadingProgressRef, LoadingProgressProps>(
                     '--LoadingProgress-height': `${height}px`,
                     '--LoadingProgress-color': color,
                 }) as CSSProperties,
-            [height],
+            [color, height],
         );
 
-        const styles = useMemo(() => ({ ...cssVariables, ...style }), [style]);
+        const styles = useMemo(() => ({ ...cssVariables, ...style }), [cssVariables, style]);
 
         useImperativeHandle(
             ref,
@@ -114,6 +114,7 @@ export default forwardRef<LoadingProgressRef, LoadingProgressProps>(
                     node.style.transition = 'none';
                     node.style.removeProperty('width');
 
+                    // eslint-disable-next-line no-unused-expressions
                     node.offsetHeight; // triggers reflow
 
                     node.style.removeProperty('transition');

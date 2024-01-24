@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Toaster } from 'sonner';
+
 import { pageContext } from '../../context/page';
 
 export interface ToastProps extends React.ComponentProps<typeof Toaster> {}

@@ -1,4 +1,3 @@
-
 import { routes } from '../../../server/contract/routes';
 import { AppLogo } from '../AppLogo/AppLogo';
 import { AppNavBar } from '../AppNavBar/AppNavBar';

@@ -1,7 +1,6 @@
 import cn from 'classnames';
 
 import { AppLogo } from '../AppLogo/AppLogo';
-
 import { Text } from '../Text/Text';
 
 import s from './AuthForm.module.pcss';
