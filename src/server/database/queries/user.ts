@@ -12,7 +12,6 @@ export async function create(u: Insertable<User>, s: Omit<Insertable<UserSetting
         const user = await trx
             .insertInto('User')
             .values({
-                role: Role.USER,
                 ...u,
                 password: await encryptPassword(u.password),
             })
@@ -32,17 +31,16 @@ export async function create(u: Insertable<User>, s: Omit<Insertable<UserSetting
 }
 
 export async function createFirstAdmin(
-    u: Insertable<User>,
+    u: Insertable<Pick<User, 'email' | 'password'>>,
     s: Omit<Insertable<UserSettings>, 'userId'>,
     p: Omit<Insertable<Project>, 'ownerId' | 'slug'>,
 ) {
     return db.transaction().execute(async (trx) => {
-        const defaultRole = Role.ADMIN;
         const user = await trx
             .insertInto('User')
             .values({
-                role: defaultRole,
                 ...u,
+                role: Role.ADMIN,
                 password: await encryptPassword(u.password),
             })
             .returningAll()
@@ -54,7 +52,7 @@ export async function createFirstAdmin(
                 ...s,
                 userId: user.id,
             })
-            .executeTakeFirstOrThrow();
+            .executeTakeFirst();
 
         await trx
             .insertInto('Project')
@@ -63,7 +61,7 @@ export async function createFirstAdmin(
                 slug: slugify(p.title),
                 ownerId: user.id,
             })
-            .executeTakeFirstOrThrow();
+            .executeTakeFirst();
 
         return user;
     });

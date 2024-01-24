@@ -33,9 +33,9 @@ export default () => {
 
     const onSubmit = useCallback(
         async (data: FirstSignupSchema) => {
-            await firstSignupMutation.mutateAsync(data as FirstSignupSchema);
+            await firstSignupMutation.mutateAsync(data);
 
-            if (firstSignupMutation.isSuccess) {
+            if (!firstSignupMutation.error) {
                 router.index();
             }
         },
@@ -74,14 +74,14 @@ export default () => {
                     <FormField {...register('email')}>
                         <FormFieldLabel>Email</FormFieldLabel>
                         <FormFieldInput>
-                            <Input autoComplete="on" autoFocus />
+                            <Input type="email" autoComplete="on" autoFocus />
                         </FormFieldInput>
                     </FormField>
 
                     <FormField {...register('password')}>
                         <FormFieldLabel>Password</FormFieldLabel>
                         <FormFieldInput>
-                            <Input />
+                            <Input type="password" />
                         </FormFieldInput>
                     </FormField>
 

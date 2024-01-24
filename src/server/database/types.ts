@@ -14,7 +14,7 @@ export type Project = {
     title: string;
     slug: string;
     description: string | null;
-    archived: Generated<boolean | null>;
+    archived: boolean | null;
     ownerId: string;
     createdAt: Generated<Timestamp>;
     updatedAt: Generated<Timestamp>;
