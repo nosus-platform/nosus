@@ -1,48 +1,64 @@
 .AppNavBarItem {
     display: flex;
     align-items: center;
-    padding: var(--gap-xs) var(--gap-l);
+    justify-content: space-between;
+    padding: var(--gap-xs) var(--gap-m);
 
     text-decoration: none;
-    color: var(--gray-400);
+    color: var(--promo-text);
 
     cursor: pointer;
 
-    transition: background-color 100ms ease-in-out;
+    transition: background-color, color 100ms ease-in-out;
 
     &:hover {
-        background-color: hsl(230, 5%, 24%);
+        color: var(--promo-text-hover);
 
-        color: var(--gray-200);
+        background-color: var(--promo-interactive);
+
+        .AppNavBarItemArrowIcon {
+            visibility: visible;
+        }
     }
 }
 
+.AppNavBarItemLinkContent {
+    display: flex;
+    align-items: center;
+}
+
 .AppNavBarItem_active {
-    color: var(--gray-200);
+    color: var(--promo-text-hover);
     font-weight: var(--font-weight-bold);
+
+    background-color: var(--promo-interactive);
 
     cursor: default;
 
     &:hover {
-        background-color: transparent;
+        .AppNavBarItemArrowIcon {
+            visibility: hidden;
+        }
     }
+}
 
-    .AppNavBarItemIcon {
-        color: var(--primary-500);
-        /*color: hsl(315, 55%, 70%);*/
-    }
+.AppNavBarItemIcon,
+.AppNavBarItemArrowIcon {
+    width: 16px;
+    height: 16px;
 }
 
 .AppNavBarItemIcon {
-    box-sizing: border-box;
-
-    --ggs: 0.6;
-
     margin-right: var(--gap-xs);
-
-    min-width: 20px;
 }
 
-.AppNavBarItemText {
-    font-size: var(--font-size-s);
+.AppNavBarItemArrowIcon {
+    visibility: hidden;
+
+    color: var(--blue-400);
+}
+
+.AppNavBarItemTab {
+    display: inline-block;
+    width: calc(16px + var(--gap-xs));
 }

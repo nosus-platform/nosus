@@ -16,7 +16,8 @@ export const usePageLoading = () => {
         if (location.pathname === prevLoc) {
             setPrevLoc('');
         }
-    }, [location, prevLoc]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location]);
 
     useEffect(() => {
         setProgress(false);

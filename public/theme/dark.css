@@ -115,5 +115,6 @@
     --check-mark-disabled: var(--text-ghost);
     --promo: var(--blue-600);
     --promo-text: var(--blue-900);
+    --promo-text-hover: var(--blue-950);
     --promo-interactive: hsl(207 64.97% 55.29%);
 }
