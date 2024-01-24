@@ -1,8 +1,9 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import { routes } from '../../../server/contract/routes';
+
 import { protectedElement, publicElement } from './route';
-import { routes } from '../../hooks/useRouter';
 
 const LazyIndex = lazy(() => import('../index'));
 

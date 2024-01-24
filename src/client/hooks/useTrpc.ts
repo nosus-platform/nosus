@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 
+import { routes } from '../../server/contract/routes';
 import { trpc } from '../utils/trpc';
-import { useState } from 'react';
 import { useAuth } from './useAuth';
-import { useRouter, routes } from './useRouter';
+import { useRouter } from './useRouter';
 
 const authHeader = (token?: string) =>
     !token

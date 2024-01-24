@@ -1,4 +1,5 @@
-import { routes } from '../../hooks/useRouter';
+
+import { routes } from '../../../server/contract/routes';
 import { AppLogo } from '../AppLogo/AppLogo';
 import { AppNavBar } from '../AppNavBar/AppNavBar';
 import { AppNavBarItem } from '../AppNavBarItem/AppNavBarItem';

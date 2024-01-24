@@ -7,24 +7,20 @@ import type { FirstSignupSchema } from '../../../server/contract/schema/auth';
 import { useForm } from '../../hooks/useForm';
 import { humanError } from '../../utils/humanError';
 import { nullable } from '../../utils/nullable';
-import { routes, useRouter } from '../../hooks/useRouter';
-import { useCookie } from '../../hooks/useCookie';
-import { cookies } from '../../../server/contract/cookies';
+import { useRouter } from '../../hooks/useRouter';
 import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import { AuthPage } from '../../components/AuthPage/AuthPage';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { FormField, FormFieldInput, FormFieldLabel } from '../../components/FormField/FormField';
 import { FormActions } from '../../components/FormActions/FormActions';
-import { FormTip } from '../../components/FormTip/FormTip';
-import { Link } from '../../components/Link/Link';
 import { AuthPromo } from '../../components/AuthPromo/AuthPromo';
 import { AuthPromoList, AuthPromoListItem } from '../../components/AuthPromoList/AuthPromoList';
+import { routes } from '../../../server/contract/routes';
 
 export default () => {
     const router = useRouter();
     const { resolvedTheme: theme } = useTheme();
-    const { deleteCookie: deleteFirstVisitCookie } = useCookie(cookies.firstVisit);
 
     const firstSignupForm = useForm<FirstSignupSchema>({
         email: '',
@@ -40,7 +36,6 @@ export default () => {
             await firstSignupMutation.mutateAsync(data as FirstSignupSchema);
 
             if (firstSignupMutation.isSuccess) {
-                deleteFirstVisitCookie();
                 router.index();
             }
         },
@@ -100,14 +95,6 @@ export default () => {
                     <FormActions>
                         <Button stretched view="primary" type="submit" text="Start blogging" />
                     </FormActions>
-
-                    <FormTip>
-                        Already have an account?{' '}
-                        <Link color="var(--text-primary)" view="inline" to={routes.authSignin()}>
-                            Sign in
-                        </Link>
-                        .
-                    </FormTip>
                 </AuthForm>
             </div>
         </AuthPage>

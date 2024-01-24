@@ -15,6 +15,7 @@ import { html } from './utils/html';
 import { cookies } from './contract/cookies';
 import { daysToMs } from './utils/date';
 import * as queries from './database/queries';
+import { routes } from './contract/routes';
 
 interface NosusAppProps {
     mountPath?: string;
@@ -56,19 +57,6 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
         res.status(200).end('Ok');
     });
 
-    // TODO: use client routes via contract folder
-    nosus.use('/auth/*', async (_req, res, next) => {
-        const count = await queries.user.count();
-
-        if (count === 0) {
-            res.cookie(cookies.firstVisit, true, {
-                maxAge: daysToMs(1),
-            });
-        }
-
-        next();
-    });
-
     if (process.env.NODE_ENV === 'production') {
         nosus.use(
             express.static(path.resolve(process.cwd(), 'dist/client'), {
@@ -93,6 +81,22 @@ export const createNosusApp = ({ mountPath }: NosusAppProps) => {
             }
         });
     }
+
+    nosus.use([routes.authSignin(''), routes.authSignup(''), routes.authBootstrap('')], async (req, res, next) => {
+        const count = await queries.user.count();
+
+        if (count === 0) {
+            res.cookie(cookies.firstVisit, true, {
+                maxAge: daysToMs(1),
+            });
+
+            if (!req.baseUrl.endsWith(routes.authBootstrap())) {
+                res.redirect(routes.authBootstrap());
+            } else {
+                next();
+            }
+        }
+    });
 
     return nosus;
 };

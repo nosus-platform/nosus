@@ -7,7 +7,7 @@ import type { SignupSchema } from '../../../server/contract/schema/auth';
 import { useForm } from '../../hooks/useForm';
 import { humanError } from '../../utils/humanError';
 import { nullable } from '../../utils/nullable';
-import { routes, useRouter } from '../../hooks/useRouter';
+import { useRouter } from '../../hooks/useRouter';
 import { Input } from '../../components/Input/Input';
 import { Button } from '../../components/Button/Button';
 import { AuthPage } from '../../components/AuthPage/AuthPage';
@@ -18,6 +18,7 @@ import { FormTip } from '../../components/FormTip/FormTip';
 import { Link } from '../../components/Link/Link';
 import { AuthPromo } from '../../components/AuthPromo/AuthPromo';
 import { AuthPromoList, AuthPromoListItem } from '../../components/AuthPromoList/AuthPromoList';
+import { routes } from '../../../server/contract/routes';
 
 export default () => {
     const router = useRouter();
