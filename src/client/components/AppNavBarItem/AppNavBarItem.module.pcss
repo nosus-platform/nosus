@@ -15,10 +15,6 @@
         color: var(--promo-text-hover);
 
         background-color: var(--promo-interactive);
-
-        .AppNavBarItemArrowIcon {
-            visibility: visible;
-        }
     }
 }
 
@@ -34,28 +30,15 @@
     background-color: var(--promo-interactive);
 
     cursor: default;
-
-    &:hover {
-        .AppNavBarItemArrowIcon {
-            visibility: hidden;
-        }
-    }
 }
 
-.AppNavBarItemIcon,
-.AppNavBarItemArrowIcon {
+.AppNavBarItemIcon {
     width: 16px;
     height: 16px;
 }
 
 .AppNavBarItemIcon {
     margin-right: var(--gap-xs);
-}
-
-.AppNavBarItemArrowIcon {
-    visibility: hidden;
-
-    color: var(--blue-400);
 }
 
 .AppNavBarItemTab {

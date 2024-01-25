@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import cn from 'classnames';
-import { ArrowLongRightIcon } from '@heroicons/react/16/solid';
 
 import { nullable } from '../../utils/nullable';
 import { Text } from '../Text/Text';
@@ -27,7 +26,5 @@ export const AppNavBarItem: React.FC<AppNavBarItemProps> = ({ icon, text, to }) 
 
             <Text size="s">{text}</Text>
         </span>
-
-        <ArrowLongRightIcon className={s.AppNavBarItemArrowIcon} />
     </NavLink>
 );
