@@ -52,6 +52,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/no-extraneous-dependencies': ['off'],
         'arrow-body-style': 'off',
+        'no-plusplus': 'off',
         camelcase: 'off',
         'no-underscore-dangle': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -67,6 +68,7 @@ module.exports = {
         ],
         'prefer-destructuring': 'error',
         'no-shadow': 'off',
+        'no-confusing-arrow': 'off',
         'padding-line-between-statements': ['error', { blankLine: 'always', prev: '*', next: 'return' }],
     },
 };

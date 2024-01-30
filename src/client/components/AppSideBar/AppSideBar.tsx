@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
     HomeIcon,
     DocumentDuplicateIcon,
@@ -7,13 +8,19 @@ import {
     Cog8ToothIcon,
 } from '@heroicons/react/16/solid';
 
+import { nullable } from '../../utils/nullable';
+import { pageContext } from '../../context/page';
 import { routes } from '../../../server/contract/routes';
 import { AppNavBar } from '../AppNavBar/AppNavBar';
 import { AppNavBarItem } from '../AppNavBarItem/AppNavBarItem';
+import { UserBadge } from '../UserBadge/UserBadge';
+import { Dropdown, DropdownArrow, DropdownPanel, DropdownTrigger } from '../Dropdown/Dropdown';
 
 import s from './AppSideBar.module.pcss';
 
 export const AppSideBar = () => {
+    const { user } = useContext(pageContext);
+
     return (
         <div className={s.AppSideBar}>
             <div className={s.AppSideBarMain}>
@@ -38,6 +45,20 @@ export const AppSideBar = () => {
                     <AppNavBarItem to="/settings" icon={<Cog8ToothIcon />} text="Settings" />
                 </AppNavBar>
             </div>
+
+            {nullable(user?.email, (email) => (
+                <Dropdown>
+                    <DropdownTrigger>
+                        <UserBadge
+                            image={user?.image || undefined}
+                            email={email}
+                            name={user?.name || undefined}
+                            iconRight={<DropdownArrow />}
+                        />
+                    </DropdownTrigger>
+                    <DropdownPanel>Hola</DropdownPanel>
+                </Dropdown>
+            ))}
         </div>
     );
 };

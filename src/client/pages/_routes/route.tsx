@@ -17,8 +17,6 @@ const ProtectedOverrides: React.FC<React.PropsWithChildren> = ({ children }) => 
     const authRefreshMutation = trpc.auth.refresh.useMutation();
     const { data: user } = trpc.user.session.useQuery(undefined, {
         enabled: authorized,
-        staleTime: 0,
-        cacheTime: 0,
         refetchOnReconnect: true,
         refetchOnWindowFocus: true,
     });
