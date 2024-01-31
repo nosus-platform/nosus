@@ -33,7 +33,8 @@ export const configurePassport = (router: Router) => {
         new JWTStrategy(
             {
                 jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-                secretOrKey: process.env.JWT_SECRET,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                secretOrKey: process.env.JWT_SECRET!,
             },
             (jwtPayload, cb) =>
                 queries.user
