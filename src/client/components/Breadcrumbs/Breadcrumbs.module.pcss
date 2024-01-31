@@ -1,0 +1,31 @@
+.Breadcrumbs {
+    font-family: monospace;
+}
+
+.BreadcrumbsItem {
+    padding: var(--gap-xs) var(--gap-xs);
+
+    color: var(--blue-400);
+
+    border-radius: var(--radius-s);
+
+    transition: background-color 50ms ease-in;
+
+    &:hover {
+        background: var(--button-secondary-hover);
+
+        color: var(--text-primary);
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--button-secondary-focus);
+
+        color: var(--text-primary);
+    }
+}
+
+.BreadcrumbsItemsSep {
+    margin: 0 2px;
+
+    color: var(--blue-400);
+}

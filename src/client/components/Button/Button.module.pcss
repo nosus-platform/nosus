@@ -2,13 +2,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: var(--radius-m);
+
+    appearance: none;
     border: none;
 
-    font-weight: 500;
-
     cursor: pointer;
-    transition: background 200ms ease-in;
+
+    transition: background-color 150ms ease-in;
 
     &:focus {
         outline: none;
@@ -17,7 +19,7 @@
     &:disabled {
         cursor: not-allowed;
         color: var(--button-disabled-text);
-        background: var(--button-disabled);
+        background-color: var(--button-disabled);
     }
 
     &:focus-visible {
@@ -28,14 +30,15 @@
 
 .Button_default {
     color: var(--button-secondary-text);
-    background: var(--button-secondary);
+
+    background-color: var(--button-secondary);
 
     &:hover {
-        background: var(--button-secondary-hover);
+        background-color: var(--button-secondary-hover);
     }
 
     &:active {
-        background: var(--button-secondary-active);
+        background-color: var(--button-secondary-active);
     }
 
     &:focus-visible {
@@ -45,14 +48,15 @@
 
 .Button_primary {
     color: var(--button-primary-text);
-    background: var(--button-primary);
+
+    background-color: var(--button-primary);
 
     &:hover {
-        background: var(--button-primary-hover);
+        background-color: var(--button-primary-hover);
     }
 
     &:active {
-        background: var(--button-primary-active);
+        background-color: var(--button-primary-active);
     }
 
     &:focus-visible {
@@ -62,14 +66,15 @@
 
 .Button_ghost {
     color: var(--button-secondary-text);
-    background: transparent;
+
+    background-color: transparent;
 
     &:hover {
-        background: var(--button-secondary-hover);
+        background-color: var(--button-secondary-hover);
     }
 
     &:active {
-        background: var(--button-secondary-active);
+        background-color: var(--button-secondary-active);
     }
 
     &:focus-visible {
@@ -77,20 +82,21 @@
     }
 
     &:disabled {
-        background: transparent;
+        background-color: transparent;
     }
 }
 
 .Button_danger {
     color: var(--button-danger-text);
-    background: var(--button-danger);
+
+    background-color: var(--button-danger);
 
     &:hover {
-        background: var(--button-danger-hover);
+        background-color: var(--button-danger-hover);
     }
 
     &:active {
-        background: var(--button-danger-active);
+        background-color: var(--button-danger-active);
     }
 
     &:focus-visible {
@@ -100,14 +106,15 @@
 
 .Button_warning {
     color: var(--button-warn-text);
-    background: var(--button-warn);
+
+    background-color: var(--button-warn);
 
     &:hover {
-        background: var(--button-warn-hover);
+        background-color: var(--button-warn-hover);
     }
 
     &:active {
-        background: var(--button-warn-active);
+        background-color: var(--button-warn-active);
     }
 
     &:focus-visible {
@@ -117,14 +124,15 @@
 
 .Button_checked {
     color: var(--blue-50);
-    background: var(--button-checked);
+
+    background-color: var(--button-checked);
 
     &:hover {
-        background: var(--button-checked-hover);
+        background-color: var(--button-checked-hover);
     }
 
     &:active {
-        background: var(--button-checked-active);
+        background-color: var(--button-checked-active);
     }
 
     &:focus-visible {
@@ -153,22 +161,27 @@
 .Button_size_xs {
     font-size: var(--font-size-xs);
     line-height: var(--line-height-xxl);
+
     min-height: 24px;
+
     padding: var(--gap-xs);
 }
 
 .Button_size_s {
     font-size: var(--font-size-s);
     line-height: var(--line-height-xxl);
+
     min-height: 32px;
+
     padding: var(--gap-s);
 }
 
 .Button_size_m {
     font-size: var(--font-size-m);
-    line-height: 20px;
     line-height: var(--line-height-l);
+
     min-height: 40px;
+
     padding: 10px var(--gap-s);
 }
 

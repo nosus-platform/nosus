@@ -1,7 +1,7 @@
 const base = '/nosus';
 
 export const routes = {
-    index: (b = base) => `${b}/dash`,
+    index: (b = base) => `${b}/~`,
 
     authSignin: (b = base) => `${b}/auth/signin`,
     authSignup: (b = base) => `${b}/auth/signup`,
