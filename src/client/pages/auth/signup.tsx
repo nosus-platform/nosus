@@ -16,8 +16,7 @@ import { FormField, FormFieldInput, FormFieldLabel } from '../../components/Form
 import { FormActions } from '../../components/FormActions/FormActions';
 import { FormTip } from '../../components/FormTip/FormTip';
 import { Link } from '../../components/Link/Link';
-import { AuthPromo } from '../../components/AuthPromo/AuthPromo';
-import { AuthPromoList, AuthPromoListItem } from '../../components/AuthPromoList/AuthPromoList';
+import { AuthPromo, AuthPromoList, AuthPromoListItem } from '../../components/AuthPromo/AuthPromo';
 import { routes } from '../../../server/contract/routes';
 
 export default () => {

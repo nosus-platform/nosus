@@ -5,7 +5,6 @@ import { pageContext } from '../../context/page';
 import { usePageLoading } from '../../hooks/usePageLoading';
 import { useHotkeys } from '../../hooks/useHotkeys';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
-import { AppMenuBar } from '../AppMenuBar/AppMenuBar';
 
 import s from './App.module.pcss';
 
@@ -32,11 +31,7 @@ export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
             <main className={s.App}>
                 <AppSideBar />
 
-                <div className={s.AppOutlet}>
-                    <AppMenuBar />
-
-                    {children}
-                </div>
+                {children}
             </main>
         </>
     );

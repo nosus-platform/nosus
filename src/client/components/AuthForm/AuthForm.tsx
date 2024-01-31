@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import { AppLogo } from '../AppLogo/AppLogo';
+import { Logo } from '../Logo/Logo';
 import { Text } from '../Text/Text';
 
 import s from './AuthForm.module.pcss';
@@ -18,7 +18,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ title, description, children
     return (
         <div className={cn(s.AuthForm, className)}>
             <div className={cn(s.AuthFormContent)}>
-                <AppLogo />
+                <Logo />
 
                 <Text className={s.AuthFormTitle} size="xl">
                     {title}

@@ -1,7 +1,7 @@
-import s from './AppLogo.module.pcss';
+import s from './Logo.module.pcss';
 
-export const AppLogo = () => (
-    <span className={s.AppLogo}>
+export const Logo = () => (
+    <span className={s.Logo}>
         <svg width="64" height="64" viewBox="0 0 786 895">
             <path
                 fillRule="evenodd"

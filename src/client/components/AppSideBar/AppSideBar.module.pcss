@@ -12,6 +12,64 @@
     border-radius: var(--radius-l);
 }
 
+.AppSideBarMenu {
+    padding-top: var(--gap-m);
+
+    margin: 0 calc(-1 * var(--gap-m));
+
+    &:first-child {
+        padding-top: 0;
+    }
+}
+
+.AppSideBarMenuItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--gap-xs) var(--gap-m);
+
+    text-decoration: none;
+    color: var(--promo-text);
+
+    cursor: pointer;
+
+    transition: background-color, color 100ms ease-in-out;
+
+    &:hover {
+        color: var(--promo-text-hover);
+
+        background-color: var(--promo-interactive);
+    }
+}
+
+.AppSideBarMenuItemLinkContent {
+    display: flex;
+    align-items: center;
+}
+
+.AppSideBarMenuItem_active {
+    color: var(--promo-text-hover);
+    font-weight: var(--font-weight-bold);
+
+    background-color: var(--promo-interactive);
+
+    cursor: default;
+}
+
+.AppSideBarMenuItemIcon {
+    width: 16px;
+    height: 16px;
+}
+
+.AppSideBarMenuItemIcon {
+    margin-right: var(--gap-xs);
+}
+
+.AppSideBarMenuItemTab {
+    display: inline-block;
+    width: calc(16px + var(--gap-xs));
+}
+
 @media (prefers-color-scheme: dark) {
     .AppSideBarMain {
         background: linear-gradient(45deg, var(--promo) 0%, var(--primary-500) 100%);

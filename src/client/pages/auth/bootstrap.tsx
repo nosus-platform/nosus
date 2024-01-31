@@ -14,8 +14,7 @@ import { AuthPage } from '../../components/AuthPage/AuthPage';
 import { AuthForm } from '../../components/AuthForm/AuthForm';
 import { FormField, FormFieldInput, FormFieldLabel } from '../../components/FormField/FormField';
 import { FormActions } from '../../components/FormActions/FormActions';
-import { AuthPromo } from '../../components/AuthPromo/AuthPromo';
-import { AuthPromoList, AuthPromoListItem } from '../../components/AuthPromoList/AuthPromoList';
+import { AuthPromo, AuthPromoList, AuthPromoListItem } from '../../components/AuthPromo/AuthPromo';
 import { routes } from '../../../server/contract/routes';
 
 export default () => {
