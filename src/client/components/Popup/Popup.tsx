@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { nullable } from '../../utils/nullable';
 
-import s from './Popup.module.pcss';
+import s from './Popup.module.scss';
 
 // const Tippy = lazy(() => import('@tippyjs/react/headless'));
 

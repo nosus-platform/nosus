@@ -1,7 +1,7 @@
 module.exports.template = (_, fileName) =>
     `import cn from 'classnames';
 
-import s from './${fileName}.module.pcss';
+import s from './${fileName}.module.scss';
 
 interface ${fileName}Props {
     children: React.ReactNode;

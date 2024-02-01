@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import { nullable } from '../../utils/nullable';
 
-import s from './Link.module.pcss';
+import s from './Link.module.scss';
 
 const viewMap = {
     primary: s.Link_primary,

@@ -4,7 +4,7 @@ import cn from 'classnames';
 import { formFieldContext } from '../../context/formField';
 import { nullable } from '../../utils/nullable';
 
-import s from './Input.module.pcss';
+import s from './Input.module.scss';
 
 const viewMap = {
     default: s.Input_default,

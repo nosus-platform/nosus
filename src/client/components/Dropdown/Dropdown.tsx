@@ -5,7 +5,7 @@ import cn from 'classnames';
 import { nullable } from '../../utils/nullable';
 import { Popup } from '../Popup/Popup';
 
-import s from './Dropdown.module.pcss';
+import s from './Dropdown.module.scss';
 
 interface DropdownProps {
     hideOnClick?: boolean;
@@ -72,11 +72,7 @@ export const DropdownTrigger = forwardRef<HTMLDivElement, React.PropsWithChildre
         <dropdownContext.Consumer>
             {({ toggle, setTriggerRef, readonly }) => (
                 <div className={cn(s.DropdownTrigger, className)} {...attrs} ref={ref}>
-                    <span
-                        className={s.DropdownTriggerControl}
-                        onClick={!readonly ? toggle : undefined}
-                        ref={setTriggerRef}
-                    >
+                    <span onClick={!readonly ? toggle : undefined} ref={setTriggerRef}>
                         {children}
                     </span>
                 </div>

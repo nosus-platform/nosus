@@ -3,7 +3,7 @@ import { ThemeProvider, useTheme } from 'next-themes';
 
 import { PageContextProps, pageContext } from '../../context/page';
 
-import './ThemeResolver.module.pcss';
+import './ThemeResolver.module.scss';
 
 const Theme: React.FC<React.PropsWithChildren> = ({ children }) => {
     const currentPageContext = useContext(pageContext);

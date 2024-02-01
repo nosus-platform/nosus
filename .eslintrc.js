@@ -1,8 +1,13 @@
 module.exports = {
     ignorePatterns: ['**/@generated/**', '**/dist/**', '**/build/**'],
-    extends: ['airbnb-base', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended'],
+    extends: [
+        'airbnb-base',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:css-modules/recommended',
+    ],
     parser: '@typescript-eslint/parser',
-    plugins: ['import', 'prettier', 'react-hooks'],
+    plugins: ['import', 'prettier', 'react-hooks', 'css-modules'],
     rules: {
         'no-restricted-syntax': 'off',
         'spaced-comment': [

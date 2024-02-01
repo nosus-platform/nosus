@@ -5,7 +5,7 @@ import type { FormFieldContextProps } from '../../context/formField';
 import { formFieldContext } from '../../context/formField';
 import { Text } from '../Text/Text';
 
-import s from './FormField.module.pcss';
+import s from './FormField.module.scss';
 
 interface FormFieldProps extends FormFieldContextProps {
     children: React.ReactNode;

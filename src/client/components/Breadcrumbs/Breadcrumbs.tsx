@@ -4,7 +4,7 @@ import { routes } from '../../../server/contract/routes';
 import { Link } from '../Link/Link';
 import { Text } from '../Text/Text';
 
-import s from './Breadcrumbs.module.pcss';
+import s from './Breadcrumbs.module.scss';
 
 interface BreadcrumbsProps {
     path: React.ReactNode[];

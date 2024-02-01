@@ -7,10 +7,10 @@ import { initials } from '../../utils/initials';
 import { GradientCircle } from '../GradientCircle/GradientCircle';
 import { Gravatar } from '../Gravatar/Gravatar';
 
-import s from './UserPic.module.pcss';
+import s from './UserPic.module.scss';
 
 interface UserPicProps {
-    email?: string;
+    email: string;
 
     name?: string;
     src?: string;
@@ -20,7 +20,7 @@ interface UserPicProps {
 export const UserPic: React.FC<UserPicProps> = ({ email, name, src, className }) => {
     // const mounted = useMounted();
     const [status, setStatus] = useState<LoadState>(src ? LoadState.loading : LoadState.error);
-    const cnProvider = (str: string) => cn(s.UserPic, `${s.UserPic}${status}`, str, className);
+    const cnProvider = (str?: string) => cn(s.UserPic, `${s.UserPic}${status}`, str, className);
 
     useEffect(() => {
         if (LoadState.loading && src) {
@@ -32,12 +32,12 @@ export const UserPic: React.FC<UserPicProps> = ({ email, name, src, className })
 
     const viewMap = {
         [LoadState.loading]: (
-            <GradientCircle source={String(email)} className={cnProvider(`${s.UserPic}GradientCircle`)}>
+            <GradientCircle source={email} className={cnProvider()}>
                 {initials(name)}
             </GradientCircle>
         ),
-        [LoadState.success]: <img src={src} alt={String(name || email)} className={cnProvider(`${s.UserPic}Image`)} />,
-        [LoadState.error]: <Gravatar email={email} className={cnProvider(`${s.UserPic}Gravatar`)} />,
+        [LoadState.success]: <img src={src} alt={String(name || email)} className={cnProvider(s.UserPicImage)} />,
+        [LoadState.error]: <Gravatar email={email} className={cnProvider()} />,
     };
 
     return viewMap[status];

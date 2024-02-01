@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { isColorDark, stringToColor } from '../../utils/stringToColor';
 
-import s from './GradientCircle.module.pcss';
+import s from './GradientCircle.module.scss';
 
 interface GradientCircleProps extends React.HTMLAttributes<HTMLSpanElement> {
     source: string;

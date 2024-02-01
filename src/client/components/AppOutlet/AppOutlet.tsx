@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import s from './AppOutlet.module.pcss';
+import s from './AppOutlet.module.scss';
 
 interface AppOutletProps {
     title: React.ReactNode;

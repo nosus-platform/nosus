@@ -5,7 +5,7 @@ import { nullable } from '../../utils/nullable';
 import { Text } from '../Text/Text';
 import { Link } from '../Link/Link';
 
-import s from './AuthPromo.module.pcss';
+import s from './AuthPromo.module.scss';
 
 interface AuthPromoListProps {
     children: React.ReactNode;

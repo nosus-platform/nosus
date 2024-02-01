@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from 'react';
 import cn from 'classnames';
 
-import s from './Text.module.pcss';
+import s from './Text.module.scss';
 
 interface TextProps extends React.HTMLAttributes<HTMLDivElement> {
     size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
