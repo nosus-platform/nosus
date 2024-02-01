@@ -1,16 +1,15 @@
 .Input {
-    position: relative;
     display: flex;
+    position: relative;
     flex: 1;
-    font-size: var(--font-size-s);
-    line-height: var(--line-height-xl);
-
-    color: var(--text-primary);
+    transition: 200ms ease-in;
+    transition-property: border;
     border-radius: var(--radius-m);
 
     padding: 6px var(--gap-sm);
-    transition: 200ms ease-in;
-    transition-property: border;
+    color: var(--text-primary);
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-xl);
 
     &:focus {
         outline: none;
@@ -76,8 +75,8 @@
 }
 
 .Wrapper {
-    position: relative;
     display: flex;
+    position: relative;
     min-height: 32px;
 }
 
@@ -91,18 +90,17 @@
 
 .Icon {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
 
     position: absolute;
-    z-index: 1;
     top: 50%;
+    justify-content: center;
+    align-items: center;
     transform: translateY(-50%);
-
-    color: var(--text-ghost);
+    z-index: 1;
     transition: color 200ms ease-in-out 0s;
+    width: 20px;
+    height: 20px;
+    color: var(--text-ghost);
 }
 
 .Icon_left {

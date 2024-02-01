@@ -60,7 +60,7 @@ export const AppSideBar = () => {
                 </AppSideBarMenu>
 
                 <AppSideBarMenu>
-                    <AppSideBarMenuItem to="/posts" icon={<DocumentTextIcon />} text="Posts" />
+                    <AppSideBarMenuItem to={routes.posts()} icon={<DocumentTextIcon />} text="Posts" />
                     <AppSideBarMenuItem to="/posts/drafts" text="Drafts" />
                     <AppSideBarMenuItem to="/posts/published" text="Published" />
                     <AppSideBarMenuItem to="/posts/schedules" text="Scheduled" />

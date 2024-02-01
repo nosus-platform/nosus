@@ -1,12 +1,18 @@
 {
-    "parser": "typescript",
-    "arrowParens": "always",
-    "printWidth": 120,
-    "jsxBracketSameLine": false,
-    "jsxSingleQuote": false,
-    "endOfLine": "auto",
-    "semi": true,
-    "singleQuote": true,
-    "tabWidth": 4,
-    "trailingComma": "all"
+  "overrides": [
+    {
+      "files": ["*.pcss", "*.scss"],
+      "options": {
+        "parser": "scss",
+        "plugins": ["prettier-plugin-css-order"]
+      }
+    }
+  ],
+  "parser": "typescript",
+  "arrowParens": "always",
+  "jsxSingleQuote": false,
+  "endOfLine": "auto",
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all"
 }

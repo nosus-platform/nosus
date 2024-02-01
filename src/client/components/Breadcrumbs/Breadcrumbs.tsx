@@ -27,6 +27,7 @@ const declCrumb = (text: string, to: React.ComponentProps<typeof Link>['to']) =>
 export const path = {
     index: declCrumb('~', routes.index()),
     tags: declCrumb('tags', routes.tags()),
+    posts: declCrumb('posts', routes.posts()),
 };
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ path, className }) => {

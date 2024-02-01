@@ -1,16 +1,14 @@
 .Button {
     display: flex;
-    align-items: center;
     justify-content: center;
-
-    border-radius: var(--radius-m);
-
+    align-items: center;
     appearance: none;
-    border: none;
+    transition: background-color 150ms ease-in;
 
     cursor: pointer;
+    border: none;
 
-    transition: background-color 150ms ease-in;
+    border-radius: var(--radius-m);
 
     &:focus {
         outline: none;
@@ -18,20 +16,19 @@
 
     &:disabled {
         cursor: not-allowed;
-        color: var(--button-disabled-text);
         background-color: var(--button-disabled);
+        color: var(--button-disabled-text);
     }
 
     &:focus-visible {
-        outline-offset: 2px;
         z-index: 1;
+        outline-offset: 2px;
     }
 }
 
 .Button_default {
-    color: var(--button-secondary-text);
-
     background-color: var(--button-secondary);
+    color: var(--button-secondary-text);
 
     &:hover {
         background-color: var(--button-secondary-hover);
@@ -47,9 +44,8 @@
 }
 
 .Button_primary {
-    color: var(--button-primary-text);
-
     background-color: var(--button-primary);
+    color: var(--button-primary-text);
 
     &:hover {
         background-color: var(--button-primary-hover);
@@ -65,9 +61,8 @@
 }
 
 .Button_ghost {
-    color: var(--button-secondary-text);
-
     background-color: transparent;
+    color: var(--button-secondary-text);
 
     &:hover {
         background-color: var(--button-secondary-hover);
@@ -87,9 +82,8 @@
 }
 
 .Button_danger {
-    color: var(--button-danger-text);
-
     background-color: var(--button-danger);
+    color: var(--button-danger-text);
 
     &:hover {
         background-color: var(--button-danger-hover);
@@ -105,9 +99,8 @@
 }
 
 .Button_warning {
-    color: var(--button-warn-text);
-
     background-color: var(--button-warn);
+    color: var(--button-warn-text);
 
     &:hover {
         background-color: var(--button-warn-hover);
@@ -123,9 +116,8 @@
 }
 
 .Button_checked {
-    color: var(--blue-50);
-
     background-color: var(--button-checked);
+    color: var(--blue-50);
 
     &:hover {
         background-color: var(--button-checked-hover);
@@ -159,30 +151,27 @@
 }
 
 .Button_size_xs {
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xxl);
+    padding: var(--gap-xs);
 
     min-height: 24px;
-
-    padding: var(--gap-xs);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xxl);
 }
 
 .Button_size_s {
-    font-size: var(--font-size-s);
-    line-height: var(--line-height-xxl);
+    padding: var(--gap-s);
 
     min-height: 32px;
-
-    padding: var(--gap-s);
+    font-size: var(--font-size-s);
+    line-height: var(--line-height-xxl);
 }
 
 .Button_size_m {
-    font-size: var(--font-size-m);
-    line-height: var(--line-height-l);
+    padding: 10px var(--gap-s);
 
     min-height: 40px;
-
-    padding: 10px var(--gap-s);
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-l);
 }
 
 .Text {

@@ -7,6 +7,8 @@ export const routes = {
     authSignup: (b = base) => `${b}/auth/signup`,
     authBootstrap: (b = base) => `${b}/auth/bootstrap`,
 
+    posts: (b = base) => `${b}/posts`,
+
     tags: (b = base) => `${b}/tags`,
     tagsNew: (b = base) => `${b}/tags/new`,
     tagsId: (id: number | string, b = base) => `${b}/tags/${id}`,
