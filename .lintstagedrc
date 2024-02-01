@@ -4,6 +4,7 @@
         "prettier --write"
     ],
     "*.{scss,pcss}": [
+        "stylelint",
         "prettier --write --parser scss"
     ],
     "*.md": [
