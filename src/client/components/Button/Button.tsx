@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { nullable } from '../../utils/nullable';
 
-import s from './Button.module.pcss';
+import s from './Button.module.scss';
 
 const viewMap = {
     default: s.Button_default,

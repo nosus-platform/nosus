@@ -8,7 +8,7 @@ import { preloadImage } from '../../utils/preloadImage';
 import { initials } from '../../utils/initials';
 import { GradientCircle } from '../GradientCircle/GradientCircle';
 
-import s from './Gravatar.module.pcss';
+import s from './Gravatar.module.scss';
 
 interface GravatarProps extends React.HTMLAttributes<HTMLImageElement> {
     email?: string | null;

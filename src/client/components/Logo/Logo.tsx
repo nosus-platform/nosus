@@ -1,4 +1,4 @@
-import s from './Logo.module.pcss';
+import s from './Logo.module.scss';
 
 export const Logo = () => (
     <span className={s.Logo}>

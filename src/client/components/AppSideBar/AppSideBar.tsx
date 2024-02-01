@@ -17,7 +17,7 @@ import { UserBadge } from '../UserBadge/UserBadge';
 import { Dropdown, DropdownArrow, DropdownPanel, DropdownTrigger } from '../Dropdown/Dropdown';
 import { Text } from '../Text/Text';
 
-import s from './AppSideBar.module.pcss';
+import s from './AppSideBar.module.scss';
 
 interface AppSideBarMenuItemProps {
     text: string;

@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { UserPic } from '../UserPic/UserPic';
 import { Button } from '../Button/Button';
 
-import s from './UserBadge.module.pcss';
+import s from './UserBadge.module.scss';
 
 interface UserBadgeProps {
     email: string;
@@ -21,9 +21,7 @@ export const UserBadge: React.FC<UserBadgeProps> = ({ email, image, name, classN
         <Button
             view="ghost"
             text={viewName}
-            iconLeft={
-                <UserPic className={s.UserBadgePic} src={image || undefined} email={email} name={name || undefined} />
-            }
+            iconLeft={<UserPic src={image || undefined} email={email} name={name || undefined} />}
             iconRight={iconRight}
             className={cn(s.UserBadge, className)}
         />

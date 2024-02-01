@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import s from './AuthPage.module.pcss';
+import s from './AuthPage.module.scss';
 
 interface AuthPageProps {
     children: React.ReactNode;

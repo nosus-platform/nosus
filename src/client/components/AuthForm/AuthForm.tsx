@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Logo } from '../Logo/Logo';
 import { Text } from '../Text/Text';
 
-import s from './AuthForm.module.pcss';
+import s from './AuthForm.module.scss';
 
 interface AuthFormProps {
     title: string;

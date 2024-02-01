@@ -6,7 +6,7 @@ import { usePageLoading } from '../../hooks/usePageLoading';
 import { useHotkeys } from '../../hooks/useHotkeys';
 import { AppSideBar } from '../AppSideBar/AppSideBar';
 
-import s from './App.module.pcss';
+import s from './App.module.scss';
 
 const LazyNotificationsStack = lazy(() => import('../NotificationsStack/NotificationsStack'));
 const LazyNetworkStatusBar = lazy(() => import('../NetworkStatusBar/NetworkStatusBar'));

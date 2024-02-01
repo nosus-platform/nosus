@@ -3,4 +3,4 @@ declare module '*.svg' {
     export default content;
 }
 
-declare module '*.module.pcss';
+declare module '*.module.scss';

@@ -2,7 +2,7 @@ import cn from 'classnames';
 
 import { Text } from '../Text/Text';
 
-import s from './FormTip.module.pcss';
+import s from './FormTip.module.scss';
 
 interface FormTipProps {
     children: React.ReactNode;

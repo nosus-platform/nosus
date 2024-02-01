@@ -3,3 +3,4 @@
 /package-lock.json
 /dist
 *.css
+src/server/database/types.ts

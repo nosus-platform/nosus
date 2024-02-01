@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import s from './FormActions.module.pcss';
+import s from './FormActions.module.scss';
 
 interface FormActionsProps {
     children: React.ReactNode;

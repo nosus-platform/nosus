@@ -10,7 +10,7 @@ import React, {
 } from 'react';
 import cn from 'classnames';
 
-import s from './LoadingProgress.module.pcss';
+import s from './LoadingProgress.module.scss';
 
 interface LoadingProgressProps extends React.HTMLAttributes<HTMLDivElement> {
     color?: string;
