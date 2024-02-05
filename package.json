@@ -99,6 +99,6 @@
     "typescript": "5.3.3",
     "typescript-plugin-css-modules": "5.0.2",
     "vite": "5.0.12",
-    "vite-bundle-analyzer": "0.6.0"
+    "vite-bundle-analyzer": "0.7.0"
   }
 }
