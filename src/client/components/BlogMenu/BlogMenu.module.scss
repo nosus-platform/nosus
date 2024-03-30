@@ -1,17 +1,4 @@
-.AppSideBar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    padding: var(--gap-m);
-}
-
-.AppSideBarMain {
-    border-radius: var(--radius-l);
-    padding: var(--gap-m);
-}
-
-.AppSideBarMenu {
+.BlogMenuSection {
     margin: 0 calc(-1 * var(--gap-m));
     padding-top: var(--gap-m);
 
@@ -20,7 +7,7 @@
     }
 }
 
-.AppSideBarMenuItem {
+.BlogMenuItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,40 +26,34 @@
     }
 }
 
-.AppSideBarMenuItemLinkContent {
+.BlogMenuItemLinkContent {
     display: flex;
     align-items: center;
 }
 
-.AppSideBarMenuItem_active {
+.BlogMenuItem_active {
     cursor: default;
     background-color: var(--promo-interactive);
     color: var(--promo-text-hover);
     font-weight: var(--font-weight-bold);
 }
 
-.AppSideBarMenuItemIcon {
+.BlogMenuItemIcon {
     width: 16px;
     height: 16px;
 }
 
-.AppSideBarMenuItemIcon {
+.BlogMenuItemIcon {
     margin-right: var(--gap-xs);
 }
 
-.AppSideBarMenuItemTab {
+.BlogMenuItemTab {
     display: inline-block;
     width: calc(16px + var(--gap-xs));
 }
 
-@media (prefers-color-scheme: dark) {
-    .AppSideBarMain {
-        background: linear-gradient(45deg, var(--promo) 0%, var(--primary-500) 100%);
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    .AppSideBarMain {
-        background: linear-gradient(235deg, var(--promo) 0%, var(--primary-500) 80%);
-    }
+.BlogMenuTitle {
+    color: var(--blue-800);
+    font-weight: var(--font-weight-bolder);
+    font-size: var(--font-size-s);
 }

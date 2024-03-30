@@ -28,6 +28,7 @@ export const path = {
     index: declCrumb('~', routes.index()),
     tags: declCrumb('tags', routes.tags()),
     posts: declCrumb('posts', routes.posts()),
+    userSettings: declCrumb('settings', routes.userSettings()),
 };
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ path, className }) => {

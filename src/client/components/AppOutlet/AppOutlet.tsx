@@ -1,29 +1,44 @@
 import cn from 'classnames';
 
+import { AppSideBarOutlet } from '../AppSideBarOutlet/AppSideBarOutlet';
+import { BlogMenu } from '../BlogMenu/BlogMenu';
+
 import s from './AppOutlet.module.scss';
 
 interface AppOutletProps {
     title: React.ReactNode;
 
+    sidebar?: React.ReactNode;
     children?: React.ReactNode;
     nav?: React.ReactNode;
     actions?: React.ReactNode;
     className?: string;
 }
 
-export const AppOutlet: React.FC<AppOutletProps> = ({ title, children, nav, actions, className }) => {
+export const AppOutlet: React.FC<AppOutletProps> = ({
+    title,
+    sidebar = <BlogMenu />,
+    children,
+    nav,
+    actions,
+    className,
+}) => {
     return (
-        <div className={cn(s.AppOutlet, className)}>
-            <div className={cn(s.AppOutletHeader)}>
-                <div className={cn(s.AppOutletNav)}>{nav}</div>
-                <div className={cn(s.AppOutletActions)}>{actions}</div>
-            </div>
+        <>
+            <AppSideBarOutlet>{sidebar}</AppSideBarOutlet>
 
-            <div className={cn(s.AppOutletContent)}>
-                <h2 className={cn(s.AppOutletTitle)}>{title}</h2>
+            <div className={cn(s.AppOutlet, className)}>
+                <div className={cn(s.AppOutletHeader)}>
+                    <div>{nav}</div>
+                    <div>{actions}</div>
+                </div>
 
-                {children}
+                <div>
+                    <h2>{title}</h2>
+
+                    {children}
+                </div>
             </div>
-        </div>
+        </>
     );
 };

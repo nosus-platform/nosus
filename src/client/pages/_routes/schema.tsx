@@ -11,6 +11,8 @@ const LazyBootstrap = lazy(() => import('../auth/bootstrap'));
 const LazySignup = lazy(() => import('../auth/signup'));
 const LazySignin = lazy(() => import('../auth/signin'));
 
+const LazyUserSettings = lazy(() => import('../users/settings'));
+
 const LazyPosts = lazy(() => import('../posts'));
 
 const LazyTags = lazy(() => import('../tags'));
@@ -22,6 +24,11 @@ const LazyError = lazy(() => import('../error'));
 const errorElement = <LazyError />;
 
 export const schema = createBrowserRouter([
+    {
+        path: routes.userSettings(),
+        element: protectedElement(<LazyUserSettings />),
+        errorElement,
+    },
     {
         path: routes.index(),
         element: protectedElement(<LazyIndex />),

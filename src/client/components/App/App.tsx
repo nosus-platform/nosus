@@ -4,7 +4,6 @@ import { nullable } from '../../utils/nullable';
 import { pageContext } from '../../context/page';
 import { usePageLoading } from '../../hooks/usePageLoading';
 import { useHotkeys } from '../../hooks/useHotkeys';
-import { AppSideBar } from '../AppSideBar/AppSideBar';
 
 import s from './App.module.scss';
 
@@ -28,11 +27,7 @@ export const App: React.FC<React.PropsWithChildren> = ({ children }) => {
 
             <LazyNotificationsStack />
 
-            <main className={s.App}>
-                <AppSideBar />
-
-                {children}
-            </main>
+            <main className={s.App}>{children}</main>
         </>
     );
 };
