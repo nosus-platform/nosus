@@ -36,7 +36,7 @@
     "kysely": "0.26.3",
     "md5": "2.3.0",
     "morgan": "1.10.0",
-    "next-themes": "0.2.1",
+    "next-themes": "0.3.0",
     "passport": "0.7.0",
     "passport-jwt": "4.0.1",
     "passport-local": "1.0.0",
